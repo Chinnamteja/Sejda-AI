@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        try {
+          var nativeFetch = window.fetch;
+          var fetchVal = nativeFetch ? nativeFetch.bind(window) : undefined;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return fetchVal;
+            },
+            set: function(fn) {
+              fetchVal = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          try {
+            Object.defineProperty(Window.prototype, 'fetch', {
+              get: function() {
+                return fetchVal;
+              },
+              set: function(fn) {
+                fetchVal = fn;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          } catch (err) {}
+        }
+
+        // Suppress expected benign [vite] websocket disconnection messages in container/iframe sandbox
+        var originalWarn = console.warn;
+        console.warn = function() {
+          var firstArg = arguments[0];
+          if (typeof firstArg === 'string' && (firstArg.indexOf('[vite]') !== -1 || firstArg.indexOf('websocket') !== -1)) {
+            return;
+          }
+          return originalWarn.apply(console, arguments);
+        };
+
+        var originalError = console.error;
+        console.error = function() {
+          var firstArg = arguments[0];
+          if (typeof firstArg === 'string' && (firstArg.indexOf('[vite]') !== -1 || firstArg.indexOf('websocket') !== -1)) {
+            return;
+          }
+          return originalError.apply(console, arguments);
+        };
+
+        window.addEventListener('error', function(event) {
+          if (
+            event &&
+            event.message &&
+            (event.message.indexOf('fetch of #<Window> which has only a getter') !== -1 ||
+             event.message.indexOf('[vite]') !== -1 ||
+             event.message.indexOf('WebSocket') !== -1)
+          ) {
+            event.preventDefault();
+            return true;
+          }
+        });
+      })();
+    </script>
+    <title>Sejda - PDF Tasks & AI Tools</title>
+    <meta name="description" content="Sejda helps with your PDF tasks. Cross-platform desktop software for Windows, macOS, Linux, and web. Edit, merge, split, compress, fill & sign PDFs offline and with AI document intelligence." />
+    <meta property="og:title" content="Sejda - PDF Tasks & AI Tools" />
+    <meta property="og:description" content="Sejda helps with your PDF tasks. Cross-platform desktop software for Windows, macOS, Linux, and web. Edit, merge, split, compress, fill & sign PDFs offline and with AI document intelligence." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#107569" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Sejda PDF" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#f7f9fa] text-slate-800 antialiased font-['Plus_Jakarta_Sans',sans-serif]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

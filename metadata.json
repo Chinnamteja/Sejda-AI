@@ -1,0 +1,6 @@
+{
+  "name": "Sejda - PDF Tasks & AI Tools",
+  "description": "Sejda helps with your PDF tasks. Cross-platform desktop software for Windows, macOS, Linux, and web. Edit, merge, split, compress, fill & sign PDFs offline and with AI document intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

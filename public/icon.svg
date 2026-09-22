@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="sejdaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#169873" />
+      <stop offset="100%" stop-color="#0c634c" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#053025" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#sejdaGrad)" filter="url(#shadow)" />
+
+  <!-- Inner Soft Accent Border -->
+  <rect x="28" y="28" width="456" height="456" rx="104" fill="none" stroke="#6ee7b7" stroke-width="4" stroke-opacity="0.3" />
+
+  <!-- Decorative Desktop PDF Sheet Graphic -->
+  <g transform="translate(106, 96)">
+    <!-- Main Sheet -->
+    <path d="M 40 0 L 210 0 L 260 50 L 260 300 C 260 311 251 320 240 320 L 40 320 C 29 320 20 311 20 300 L 20 20 C 20 9 29 0 40 0 Z" fill="#ffffff" filter="url(#shadow)" />
+
+    <!-- Folded Corner -->
+    <path d="M 210 0 L 210 50 L 260 50 Z" fill="#e2e8f0" />
+    <path d="M 210 50 L 260 50" stroke="#cbd5e1" stroke-width="2" />
+
+    <!-- Sheet Lines -->
+    <rect x="56" y="80" width="148" height="16" rx="8" fill="#107569" fill-opacity="0.85" />
+    <rect x="56" y="116" width="120" height="12" rx="6" fill="#94a3b8" />
+    <rect x="56" y="140" width="168" height="12" rx="6" fill="#cbd5e1" />
+    <rect x="56" y="164" width="140" height="12" rx="6" fill="#cbd5e1" />
+
+    <!-- Sejda Flower / Geometric Petals Emblem Badge -->
+    <g transform="translate(140, 230)">
+      <circle cx="0" cy="0" r="54" fill="url(#accentGrad)" filter="url(#shadow)" />
+      <!-- Petals -->
+      <path d="M 0 -36 C 14 -18, 14 0, 0 0 C -14 0, -14 -18, 0 -36 Z" fill="#ffffff" opacity="0.95" />
+      <path d="M 36 0 C 18 14, 0 14, 0 0 C 0 -14, 18 -14, 36 0 Z" fill="#ffffff" opacity="0.95" />
+      <path d="M 0 36 C -14 18, -14 0, 0 0 C 14 0, 14 18, 0 36 Z" fill="#ffffff" opacity="0.95" />
+      <path d="M -36 0 C -18 -14, 0 -14, 0 0 C 0 14, -18 14, -36 0 Z" fill="#ffffff" opacity="0.95" />
+      <circle cx="0" cy="0" r="10" fill="#fef08a" />
+    </g>
+
+    <!-- PDF Tag Badge -->
+    <g transform="translate(44, 210)">
+      <rect x="0" y="0" width="84" height="34" rx="8" fill="#ef4444" />
+      <text x="42" y="24" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="1">PDF</text>
+    </g>
+  </g>
+</svg>
