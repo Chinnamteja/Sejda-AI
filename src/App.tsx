@@ -18,6 +18,7 @@ import { ConvertTool } from './components/ConvertTool';
 import { PricingModal } from './components/PricingModal';
 import { DesktopModal } from './components/DesktopModal';
 import { DesktopWindowFrame } from './components/DesktopWindowFrame';
+import { LegalModal, LegalTab } from './components/LegalModal';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { usePWAInstall } from './hooks/usePWAInstall';
 import { ToolId, LoadedDocument } from './types';
@@ -32,6 +33,8 @@ export default function App() {
   const [notification, setNotification] = useState<string | null>(null);
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const [isDesktopModalOpen, setIsDesktopModalOpen] = useState(false);
+  const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<LegalTab>('privacy');
   const [isDesktopFrameActive, setIsDesktopFrameActive] = useState(false);
   const { detectedOS } = usePWAInstall();
   const localFileInputRef = useRef<HTMLInputElement>(null);
@@ -378,7 +381,15 @@ export default function App() {
       <main className="flex-1">{renderActiveView()}</main>
 
       {/* Global Footer (shown on landing page) */}
-      {!activeTool && <Footer onSelectTool={handleSelectTool} />}
+      {!activeTool && (
+        <Footer
+          onSelectTool={handleSelectTool}
+          onOpenLegal={(tab) => {
+            setLegalTab(tab);
+            setIsLegalModalOpen(true);
+          }}
+        />
+      )}
 
       {/* Desktop Software Hub Modal */}
       <DesktopModal
@@ -386,6 +397,13 @@ export default function App() {
         onClose={() => setIsDesktopModalOpen(false)}
         onToggleDesktopFrame={() => setIsDesktopFrameActive(!isDesktopFrameActive)}
         isDesktopFrameActive={isDesktopFrameActive}
+      />
+
+      {/* Legal & Compliance Modal (Privacy, Cookies/AdSense, Terms) */}
+      <LegalModal
+        isOpen={isLegalModalOpen}
+        onClose={() => setIsLegalModalOpen(false)}
+        initialTab={legalTab}
       />
 
       {/* Offline Mode Indicator */}

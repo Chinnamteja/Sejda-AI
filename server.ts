@@ -42,6 +42,18 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// AdSense Authorized Digital Sellers (ads.txt) verification route
+app.get('/ads.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('google.com, pub-9341732423335241, DIRECT, f08c47fec0942fa0\n');
+});
+
+// Search Engine & AdSense Crawler directives (robots.txt)
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nAllow: /\n\nUser-agent: Mediapartners-Google\nAllow: /\n\nUser-agent: AdsBot-Google\nAllow: /\n\nUser-agent: Googlebot\nAllow: /\n');
+});
+
 // 1. AI Ask PDF / Chat
 app.post('/api/ai/ask', async (req, res) => {
   try {

@@ -9,9 +9,10 @@ import { ToolId } from '../types';
 
 interface FooterProps {
   onSelectTool: (tool: ToolId) => void;
+  onOpenLegal?: (tab: 'privacy' | 'terms' | 'cookies') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectTool }) => {
+export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal }) => {
   return (
     <footer className="bg-white border-t border-slate-200 mt-16 text-slate-600 text-sm">
       {/* Security & Privacy Banner */}
@@ -243,14 +244,32 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool }) => {
             <span>© 2026 Sejda BV. All rights reserved.</span>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <span className="hover:text-slate-800 cursor-pointer">Terms of Service</span>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <button
+              type="button"
+              onClick={() => onOpenLegal?.('terms')}
+              className="hover:text-slate-800 cursor-pointer transition text-left"
+            >
+              Terms of Service
+            </button>
             <span>•</span>
-            <span className="hover:text-slate-800 cursor-pointer">Privacy Policy</span>
+            <button
+              type="button"
+              onClick={() => onOpenLegal?.('privacy')}
+              className="hover:text-slate-800 cursor-pointer transition text-left"
+            >
+              Privacy Policy
+            </button>
             <span>•</span>
-            <span className="hover:text-slate-800 cursor-pointer">Desktop App</span>
+            <button
+              type="button"
+              onClick={() => onOpenLegal?.('cookies')}
+              className="hover:text-slate-800 cursor-pointer transition text-left"
+            >
+              Cookies & AdSense
+            </button>
             <span>•</span>
-            <span className="hover:text-slate-800 cursor-pointer">English (US)</span>
+            <span className="text-slate-400">English (US)</span>
           </div>
         </div>
       </div>
