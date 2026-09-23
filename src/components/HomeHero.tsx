@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { ToolId, LoadedDocument } from '../types';
 import { createSampleDocument } from '../data/sampleDocuments';
+import { AdSenseUnit } from './AdSenseUnit';
 
 interface HomeHeroProps {
   onFileUpload: (file: File) => void;
@@ -201,6 +202,14 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
           Files stay private. Automatically deleted after 2 hours. Free service for documents up to 200 pages or 50 MB and 3 tasks per hour.
         </span>
       </div>
+
+      {/* Responsive AdSense Ad Unit (conditionally rendered, hides/minimizes if no space is available) */}
+      <AdSenseUnit
+        client="ca-pub-9341732423335241"
+        format="auto"
+        className="my-5"
+        minWidth={280}
+      />
 
       {/* Sejda Desktop Software Callout for All OS */}
       <div className="mt-8 max-w-xl mx-auto p-4 rounded-xl bg-gradient-to-r from-slate-900 to-slate-800 text-white shadow-md flex items-center justify-between text-left">

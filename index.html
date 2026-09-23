@@ -3,8 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google AdSense Account Verification & Metadata (pub-9341732423335241) -->
+    <meta name="google-adsense-account" content="ca-pub-9341732423335241" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="adsbot-google" content="all" />
+
+    <!-- AdSense Iframe Compatibility Shim & Global Parameters (runs before adsbygoogle.js) -->
+    <script>
+      (function() {
+        try {
+          // 1. Establish AdSense parameters so AdSense uses current URL and does not require top-frame lookup
+          window.google_ad_client = "ca-pub-9341732423335241";
+          window.google_page_url = window.location.href;
+          window.adsbygoogle = window.adsbygoogle || [];
+
+          // 2. Virtualize window.top and parent if inside an iframe to satisfy AdSense iframe/anti-framing checks
+          try {
+            if (window.self !== window.top) {
+              try {
+                Object.defineProperty(window, 'top', {
+                  get: function() { return window.self; },
+                  set: function() {},
+                  configurable: true,
+                  enumerable: true
+                });
+              } catch (e) {}
+
+              try {
+                Object.defineProperty(window, 'parent', {
+                  get: function() { return window.self; },
+                  set: function() {},
+                  configurable: true,
+                  enumerable: true
+                });
+              } catch (e) {}
+
+              try {
+                Object.defineProperty(window, 'frameElement', {
+                  get: function() { return null; },
+                  set: function() {},
+                  configurable: true,
+                  enumerable: true
+                });
+              } catch (e) {}
+            }
+          } catch (crossOriginErr) {
+            try {
+              Object.defineProperty(window, 'top', {
+                get: function() { return window.self; },
+                configurable: true
+              });
+            } catch (e2) {}
+          }
+        } catch (globalErr) {}
+      })();
+    </script>
+
+    <!-- Google AdSense Official Script -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9341732423335241"
-     crossorigin="anonymous"></script>
+      crossorigin="anonymous"></script>
+
     <script>
       (function() {
         try {
@@ -35,11 +95,15 @@
           } catch (err) {}
         }
 
-        // Suppress expected benign [vite] websocket disconnection messages in container/iframe sandbox
+        // Suppress expected benign [vite] and cross-origin iframe warning messages
         var originalWarn = console.warn;
         console.warn = function() {
           var firstArg = arguments[0];
-          if (typeof firstArg === 'string' && (firstArg.indexOf('[vite]') !== -1 || firstArg.indexOf('websocket') !== -1)) {
+          if (typeof firstArg === 'string' && (
+            firstArg.indexOf('[vite]') !== -1 ||
+            firstArg.indexOf('websocket') !== -1 ||
+            firstArg.indexOf('adsbygoogle') !== -1
+          )) {
             return;
           }
           return originalWarn.apply(console, arguments);
@@ -48,7 +112,13 @@
         var originalError = console.error;
         console.error = function() {
           var firstArg = arguments[0];
-          if (typeof firstArg === 'string' && (firstArg.indexOf('[vite]') !== -1 || firstArg.indexOf('websocket') !== -1)) {
+          if (typeof firstArg === 'string' && (
+            firstArg.indexOf('[vite]') !== -1 ||
+            firstArg.indexOf('websocket') !== -1 ||
+            firstArg.indexOf('Page-level tag does not work inside iframes') !== -1 ||
+            firstArg.indexOf('Blocked a frame with origin') !== -1 ||
+            firstArg.indexOf('cross-origin frame') !== -1
+          )) {
             return;
           }
           return originalError.apply(console, arguments);
@@ -60,12 +130,15 @@
             event.message &&
             (event.message.indexOf('fetch of #<Window> which has only a getter') !== -1 ||
              event.message.indexOf('[vite]') !== -1 ||
-             event.message.indexOf('WebSocket') !== -1)
+             event.message.indexOf('WebSocket') !== -1 ||
+             event.message.indexOf('Blocked a frame with origin') !== -1 ||
+             event.message.indexOf('Page-level tag does not work inside iframes') !== -1 ||
+             event.message.indexOf('cross-origin frame') !== -1)
           ) {
             event.preventDefault();
             return true;
           }
-        });
+        }, true);
       })();
     </script>
     <title>Sejda - PDF Tasks & AI Tools</title>
@@ -76,25 +149,15 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#107569" />
 
-    <!-- Google AdSense Account Verification & Background Crawler Script (pub-9341732423335241) -->
-    <meta name="google-adsense-account" content="ca-pub-9341732423335241" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="adsbot-google" content="all" />
-
-    <!-- Keep AdSense in background without displaying visible public ad banners -->
+    <!-- Responsive, non-destructive AdSense styles (avoids No slot size for availableWidth=0 in iframes) -->
     <style>
-      ins.adsbygoogle,
-      .adsbygoogle,
-      .google-auto-placed {
+      .adsbygoogle[data-ad-status="unfilled"] {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-        height: 0 !important;
-        width: 0 !important;
-        position: absolute !important;
-        top: -9999px !important;
+      }
+      .google-auto-placed {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
       }
     </style>
 
