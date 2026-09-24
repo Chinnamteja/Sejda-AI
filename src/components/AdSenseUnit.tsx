@@ -18,11 +18,10 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
   client = 'ca-pub-9341732423335241',
   format = 'auto',
   className = '',
-  minWidth = 250,
+  minWidth = 150,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hasSpace, setHasSpace] = useState<boolean>(true);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isAdSensePreview, setIsAdSensePreview] = useState<boolean>(false);
   const adPushedRef = useRef<boolean>(false);
 
@@ -44,11 +43,10 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    // Check available container dimensions using ResizeObserver
+    // Monitor container dimensions with low threshold for mobile devices
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const width = entry.contentRect.width;
-        // If container width is less than minWidth, collapse and hide to prevent AdSense errors
         if (width > 0 && width < minWidth) {
           setHasSpace(false);
         } else if (width >= minWidth) {
@@ -68,24 +66,23 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
     // Only push when space is available, hasn't been pushed yet, and not in AdSense preview tool
     if (!hasSpace || adPushedRef.current || isAdSensePreview) return;
 
-    // Small delay to ensure the container is fully rendered and has calculated layout width
+    // Small delay to ensure the container is rendered in the DOM
     const timer = setTimeout(() => {
       try {
         if (typeof window !== 'undefined') {
           (window as any).adsbygoogle = (window as any).adsbygoogle || [];
           (window as any).adsbygoogle.push({});
           adPushedRef.current = true;
-          setIsLoaded(true);
         }
       } catch (err) {
         // Silently catch duplicate push or iframe sandbox restrictions
       }
-    }, 150);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [hasSpace, isAdSensePreview]);
 
-  // If no space is available in the viewport/container, keep it completely hidden
+  // If no space is available in the viewport/container, keep it hidden
   if (!hasSpace) {
     return <div ref={containerRef} className="w-full h-0 overflow-hidden" aria-hidden="true" />;
   }
@@ -95,9 +92,9 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
     return (
       <div
         ref={containerRef}
-        className={`adsense-responsive-container w-full max-w-2xl mx-auto my-6 ${className}`}
+        className={`adsense-responsive-container w-full max-w-2xl mx-auto my-4 sm:my-6 ${className}`}
       >
-        <div className="relative overflow-hidden rounded-xl border border-dashed border-slate-300/80 bg-slate-50/70 p-3 text-center">
+        <div className="relative rounded-xl border border-dashed border-slate-300/80 bg-slate-50/70 p-3 text-center">
           <span className="block text-[11px] uppercase tracking-wider text-slate-400 font-medium">
             AdSense Placement Area
           </span>
@@ -109,18 +106,17 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`adsense-responsive-container w-full max-w-2xl mx-auto my-6 transition-all duration-300 ${
-        isLoaded ? 'opacity-100' : 'opacity-0'
-      } ${className}`}
+      className={`adsense-responsive-container w-full max-w-2xl mx-auto my-3 sm:my-6 transition-all duration-300 ${className}`}
     >
-      <div className="relative overflow-hidden rounded-xl border border-slate-200/60 bg-slate-50/50 p-2 sm:p-3 text-center">
+      <div className="relative rounded-xl border border-slate-200/60 bg-slate-50/50 p-2 sm:p-3 text-center">
         <span className="block text-[10px] uppercase tracking-wider text-slate-400 font-medium mb-1">
           Advertisement
         </span>
-        <div className="min-h-[60px] sm:min-h-[90px] flex items-center justify-center overflow-hidden">
+        {/* Do not use overflow:hidden or rigid flex wrappers which break mobile full-width responsive ad units */}
+        <div className="w-full min-h-[50px] sm:min-h-[90px]">
           <ins
-            className="adsbygoogle w-full block"
-            style={{ display: 'block', minHeight: '60px' }}
+            className="adsbygoogle"
+            style={{ display: 'block', minHeight: '50px' }}
             data-ad-client={client}
             data-ad-format={format}
             data-full-width-responsive="true"

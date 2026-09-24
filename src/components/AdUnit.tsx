@@ -35,23 +35,11 @@ export const AdUnit: React.FC<AdUnitProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const insRef = useRef<HTMLModElement>(null);
   const [hasError, setHasError] = useState<boolean>(false);
-  const [adLoaded, setAdLoaded] = useState<boolean>(false);
   const pushAttempted = useRef<boolean>(false);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
-    // Check if container width is zero (common in iframe restrictions or collapsed tabs)
-    if (container.offsetWidth === 0) {
-      // Recheck once in case layout stabilizes
-      const checkWidthTimer = setTimeout(() => {
-        if (container.offsetWidth === 0) {
-          setHasError(true);
-        }
-      }, 300);
-      return () => clearTimeout(checkWidthTimer);
-    }
 
     if (!pushAttempted.current) {
       try {
@@ -63,7 +51,7 @@ export const AdUnit: React.FC<AdUnitProps> = ({
       }
     }
 
-    // Monitor the <ins> element for AdSense status updates (e.g., data-ad-status="unfilled")
+    // Monitor the <ins> element for AdSense status updates (data-ad-status="unfilled")
     const insElement = insRef.current;
     let observer: MutationObserver | null = null;
 
@@ -74,8 +62,6 @@ export const AdUnit: React.FC<AdUnitProps> = ({
             const status = insElement.getAttribute('data-ad-status');
             if (status === 'unfilled') {
               setHasError(true);
-            } else if (status === 'filled') {
-              setAdLoaded(true);
             }
           }
         }
@@ -87,22 +73,19 @@ export const AdUnit: React.FC<AdUnitProps> = ({
       });
     }
 
-    // Safety timeout: If AdSense fails to render or is blocked by iframe constraints after 2.5s, show the recommended tool fallback
+    // Only switch to fallback if AdSense explicitly sets unfilled or after generous network timeout (7s) on mobile
     const fallbackTimer = setTimeout(() => {
-      if (!adLoaded) {
-        const hasIframe = insElement?.querySelector('iframe');
-        const status = insElement?.getAttribute('data-ad-status');
-        if (!hasIframe || status === 'unfilled' || insElement?.clientHeight === 0) {
-          setHasError(true);
-        }
+      const status = insElement?.getAttribute('data-ad-status');
+      if (status === 'unfilled') {
+        setHasError(true);
       }
-    }, 2500);
+    }, 7000);
 
     return () => {
       if (observer) observer.disconnect();
       clearTimeout(fallbackTimer);
     };
-  }, [adLoaded]);
+  }, []);
 
   const handleFallbackClick = () => {
     if (onSelectTool && fallbackToolId) {

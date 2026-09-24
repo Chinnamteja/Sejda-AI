@@ -20,13 +20,18 @@
     <meta name="googlebot" content="index, follow" />
     <meta name="adsbot-google" content="all" />
 
-    <!-- Google AdSense Global Configuration -->
+    <!-- Google AdSense Global Configuration & Mobile Page-Level Ads -->
     <script>
       window.google_ad_client = "ca-pub-9341732423335241";
       try {
         window.google_page_url = window.location.href;
       } catch (e) {}
       window.adsbygoogle = window.adsbygoogle || [];
+      // Enable mobile anchor, vignette, and responsive page-level ads
+      window.adsbygoogle.push({
+        google_ad_client: "ca-pub-9341732423335241",
+        enable_page_level_ads: true
+      });
     </script>
 
     <!-- Google AdSense Official Script -->
