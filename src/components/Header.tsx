@@ -67,18 +67,19 @@ export const Header: React.FC<HeaderProps> = ({
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-xs">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 w-full">
           {/* Logo & All Tools dropdown */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4 sm:space-x-6">
             <button
               id="header-logo-btn"
               onClick={() => onSelectTool('home')}
-              className="flex items-center space-x-2.5 text-left group focus:outline-hidden"
+              className="flex items-center space-x-2.5 text-left group focus:outline-hidden cursor-pointer"
+              title="Sejda Home"
             >
               {/* Sejda Icon */}
-              <div className="w-8 h-8 rounded-md bg-[#18a474] flex items-center justify-center shadow-xs text-white group-hover:bg-[#159167] transition-colors">
+              <div className="w-8 h-8 rounded-lg bg-[#18a474] flex items-center justify-center shadow-xs text-white group-hover:bg-[#159167] transition-all">
                 <svg
                   className="w-5 h-5 fill-current"
                   viewBox="0 0 24 24"
@@ -90,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="text-2xl font-extrabold tracking-tight text-[#18a474]">
                   sejda
                 </span>
-                <span className="ml-1 px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-emerald-50 text-[#18a474] rounded-sm border border-emerald-200">
+                <span className="ml-1.5 px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-emerald-50 text-[#18a474] rounded-md border border-emerald-200/80">
                   AI
                 </span>
               </div>
@@ -101,10 +102,10 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="header-all-tools-dropdown-btn"
                 onClick={() => setAllToolsOpen(!allToolsOpen)}
-                className={`flex items-center space-x-1.5 px-3 py-1.5 text-sm font-semibold rounded-md transition-colors ${
+                className={`flex items-center space-x-1.5 px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   allToolsOpen
                     ? 'bg-slate-100 text-[#18a474]'
-                    : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                    : 'text-slate-700 hover:bg-slate-100/70 hover:text-slate-900'
                 }`}
               >
                 <span>All Tools</span>
@@ -253,10 +254,10 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="nav-edit-btn"
                 onClick={() => onSelectTool('edit')}
-                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'edit'
-                    ? 'text-[#18a474] font-semibold bg-emerald-50'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'text-[#18a474] bg-emerald-50'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Edit
@@ -264,10 +265,10 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="nav-fill-sign-btn"
                 onClick={() => onSelectTool('fill_sign')}
-                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'fill_sign'
-                    ? 'text-[#18a474] font-semibold bg-emerald-50'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'text-[#18a474] bg-emerald-50'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Fill & Sign
@@ -275,10 +276,10 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="nav-merge-btn"
                 onClick={() => onSelectTool('merge')}
-                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'merge'
-                    ? 'text-[#18a474] font-semibold bg-emerald-50'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'text-[#18a474] bg-emerald-50'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Merge
@@ -286,10 +287,10 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="nav-split-btn"
                 onClick={() => onSelectTool('split')}
-                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'split'
-                    ? 'text-[#18a474] font-semibold bg-emerald-50'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'text-[#18a474] bg-emerald-50'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Split
@@ -297,10 +298,10 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="nav-compress-btn"
                 onClick={() => onSelectTool('compress')}
-                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'compress'
-                    ? 'text-[#18a474] font-semibold bg-emerald-50'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'text-[#18a474] bg-emerald-50'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Compress
@@ -308,10 +309,10 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="nav-ai-suite-btn"
                 onClick={() => onSelectTool('ai_chat')}
-                className={`px-3 py-1.5 text-sm font-semibold rounded-md flex items-center space-x-1.5 transition-colors ${
+                className={`px-3 py-1.5 text-sm font-semibold rounded-lg flex items-center space-x-1.5 transition-colors cursor-pointer ${
                   currentTool.startsWith('ai_')
-                    ? 'text-emerald-700 bg-emerald-100/70 border border-emerald-300'
-                    : 'text-emerald-700 hover:bg-emerald-50 border border-transparent'
+                    ? 'text-emerald-800 bg-emerald-100/70'
+                    : 'text-emerald-700 hover:bg-emerald-50/80'
                 }`}
               >
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
@@ -320,23 +321,12 @@ export const Header: React.FC<HeaderProps> = ({
             </nav>
           </div>
 
-          {/* Right Header Options: Document Status / Pricing / Desktop / Account */}
-          <div className="flex items-center space-x-3">
-            {currentTool !== 'home' && (
-              <button
-                id="header-back-home-btn"
-                onClick={() => onSelectTool('home')}
-                className="hidden sm:flex items-center space-x-1.5 text-xs text-slate-500 hover:text-slate-800 px-2.5 py-1.5 rounded-md hover:bg-slate-100 transition"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>All Tools Home</span>
-              </button>
-            )}
-
+          {/* Right Header Options: Pricing / Desktop App / Free Account - Exactly the same on all pages */}
+          <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
             <button
               id="header-pricing-btn"
               onClick={onOpenPricingModal}
-              className="text-sm font-medium text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-md hover:bg-slate-50 transition"
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-100/70 transition cursor-pointer"
             >
               Pricing
             </button>
@@ -346,7 +336,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="header-account-btn"
               onClick={onOpenPricingModal}
-              className="text-xs font-semibold px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md transition"
+              className="text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 rounded-lg border border-slate-200/60 transition cursor-pointer whitespace-nowrap shadow-2xs"
             >
               Free Account (3 tasks/hr)
             </button>
