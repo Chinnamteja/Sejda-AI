@@ -20,18 +20,13 @@
     <meta name="googlebot" content="index, follow" />
     <meta name="adsbot-google" content="all" />
 
-    <!-- Google AdSense Global Configuration & Mobile Page-Level Ads -->
+    <!-- Google AdSense Global Configuration -->
     <script>
       window.google_ad_client = "ca-pub-9341732423335241";
       try {
         window.google_page_url = window.location.href;
       } catch (e) {}
       window.adsbygoogle = window.adsbygoogle || [];
-      // Enable mobile anchor, vignette, and responsive page-level ads
-      window.adsbygoogle.push({
-        google_ad_client: "ca-pub-9341732423335241",
-        enable_page_level_ads: true
-      });
     </script>
 
     <!-- Google AdSense Official Script -->
@@ -90,7 +85,9 @@
             firstArg.indexOf('websocket') !== -1 ||
             firstArg.indexOf('Page-level tag does not work inside iframes') !== -1 ||
             firstArg.indexOf('Blocked a frame with origin') !== -1 ||
-            firstArg.indexOf('cross-origin frame') !== -1
+            firstArg.indexOf('cross-origin frame') !== -1 ||
+            firstArg.indexOf('TagError') !== -1 ||
+            firstArg.indexOf('enable_page_level_ads') !== -1
           )) {
             return;
           }
@@ -106,7 +103,9 @@
              event.message.indexOf('WebSocket') !== -1 ||
              event.message.indexOf('Blocked a frame with origin') !== -1 ||
              event.message.indexOf('Page-level tag does not work inside iframes') !== -1 ||
-             event.message.indexOf('cross-origin frame') !== -1)
+             event.message.indexOf('cross-origin frame') !== -1 ||
+             event.message.indexOf('TagError') !== -1 ||
+             event.message.indexOf('enable_page_level_ads') !== -1)
           ) {
             event.preventDefault();
             return true;
