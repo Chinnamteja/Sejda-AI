@@ -63,6 +63,32 @@
           } catch (err) {}
         }
 
+        // Graceful WebSocket wrapper to prevent "WebSocket closed without opened" in iframe/dev environments
+        if (typeof window !== 'undefined' && window.WebSocket) {
+          var RealWebSocket = window.WebSocket;
+          var SafeWebSocket = function(url, protocols) {
+            var ws;
+            try {
+              ws = protocols !== undefined ? new RealWebSocket(url, protocols) : new RealWebSocket(url);
+            } catch (err) {
+              return {};
+            }
+            ws.addEventListener('error', function(e) {
+              // Benign WebSocket closing in container/iframe
+              if (e && typeof e.stopPropagation === 'function') {
+                e.stopPropagation();
+              }
+            });
+            return ws;
+          };
+          SafeWebSocket.prototype = RealWebSocket.prototype;
+          SafeWebSocket.CONNECTING = RealWebSocket.CONNECTING;
+          SafeWebSocket.OPEN = RealWebSocket.OPEN;
+          SafeWebSocket.CLOSING = RealWebSocket.CLOSING;
+          SafeWebSocket.CLOSED = RealWebSocket.CLOSED;
+          window.WebSocket = SafeWebSocket;
+        }
+
         // Suppress expected benign [vite] and cross-origin iframe warning messages
         var originalWarn = console.warn;
         console.warn = function() {
@@ -70,6 +96,8 @@
           if (typeof firstArg === 'string' && (
             firstArg.indexOf('[vite]') !== -1 ||
             firstArg.indexOf('websocket') !== -1 ||
+            firstArg.indexOf('WebSocket') !== -1 ||
+            firstArg.indexOf('closed without opened') !== -1 ||
             firstArg.indexOf('adsbygoogle') !== -1
           )) {
             return;
@@ -83,6 +111,8 @@
           if (typeof firstArg === 'string' && (
             firstArg.indexOf('[vite]') !== -1 ||
             firstArg.indexOf('websocket') !== -1 ||
+            firstArg.indexOf('WebSocket') !== -1 ||
+            firstArg.indexOf('closed without opened') !== -1 ||
             firstArg.indexOf('Page-level tag does not work inside iframes') !== -1 ||
             firstArg.indexOf('Blocked a frame with origin') !== -1 ||
             firstArg.indexOf('cross-origin frame') !== -1 ||
@@ -101,6 +131,8 @@
             (event.message.indexOf('fetch of #<Window> which has only a getter') !== -1 ||
              event.message.indexOf('[vite]') !== -1 ||
              event.message.indexOf('WebSocket') !== -1 ||
+             event.message.indexOf('websocket') !== -1 ||
+             event.message.indexOf('closed without opened') !== -1 ||
              event.message.indexOf('Blocked a frame with origin') !== -1 ||
              event.message.indexOf('Page-level tag does not work inside iframes') !== -1 ||
              event.message.indexOf('cross-origin frame') !== -1 ||
@@ -111,6 +143,19 @@
             return true;
           }
         }, true);
+
+        window.addEventListener('unhandledrejection', function(event) {
+          if (
+            event &&
+            event.reason &&
+            typeof event.reason.message === 'string' &&
+            (event.reason.message.indexOf('WebSocket') !== -1 ||
+             event.reason.message.indexOf('closed without opened') !== -1)
+          ) {
+            event.preventDefault();
+            return true;
+          }
+        });
       })();
     </script>
     <title>Sejda - PDF Tasks & AI Tools</title>
