@@ -384,6 +384,7 @@ export default function App() {
       {!activeTool && (
         <Footer
           onSelectTool={handleSelectTool}
+          onOpenPricing={() => setIsPricingModalOpen(true)}
           onOpenLegal={(tab) => {
             setLegalTab(tab);
             setIsLegalModalOpen(true);

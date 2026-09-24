@@ -10,9 +10,10 @@ import { ToolId } from '../types';
 interface FooterProps {
   onSelectTool: (tool: ToolId) => void;
   onOpenLegal?: (tab: 'privacy' | 'terms' | 'cookies') => void;
+  onOpenPricing?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal }) => {
+export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpenPricing }) => {
   return (
     <footer className="bg-white border-t border-slate-200 mt-16 text-slate-600 text-sm">
       {/* Security & Privacy Banner */}
@@ -228,6 +229,18 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal }) => 
                   className="hover:text-[#18a474] transition"
                 >
                   PDF to JPG
+                </button>
+              </li>
+              <li className="pt-1">
+                <button
+                  type="button"
+                  onClick={onOpenPricing}
+                  className="font-semibold text-emerald-700 hover:text-emerald-800 transition flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Pricing & Pro Plans</span>
+                  <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">
+                    GPay &bull; PayPal
+                  </span>
                 </button>
               </li>
               <li className="pt-2 text-xs text-slate-400">
