@@ -20,55 +20,13 @@
     <meta name="googlebot" content="index, follow" />
     <meta name="adsbot-google" content="all" />
 
-    <!-- AdSense Iframe Compatibility Shim & Global Parameters (runs before adsbygoogle.js) -->
+    <!-- Google AdSense Global Configuration -->
     <script>
-      (function() {
-        try {
-          // 1. Establish AdSense parameters so AdSense uses current URL and does not require top-frame lookup
-          window.google_ad_client = "ca-pub-9341732423335241";
-          window.google_page_url = window.location.href;
-          window.adsbygoogle = window.adsbygoogle || [];
-
-          // 2. Virtualize window.top and parent if inside an iframe to satisfy AdSense iframe/anti-framing checks
-          try {
-            if (window.self !== window.top) {
-              try {
-                Object.defineProperty(window, 'top', {
-                  get: function() { return window.self; },
-                  set: function() {},
-                  configurable: true,
-                  enumerable: true
-                });
-              } catch (e) {}
-
-              try {
-                Object.defineProperty(window, 'parent', {
-                  get: function() { return window.self; },
-                  set: function() {},
-                  configurable: true,
-                  enumerable: true
-                });
-              } catch (e) {}
-
-              try {
-                Object.defineProperty(window, 'frameElement', {
-                  get: function() { return null; },
-                  set: function() {},
-                  configurable: true,
-                  enumerable: true
-                });
-              } catch (e) {}
-            }
-          } catch (crossOriginErr) {
-            try {
-              Object.defineProperty(window, 'top', {
-                get: function() { return window.self; },
-                configurable: true
-              });
-            } catch (e2) {}
-          }
-        } catch (globalErr) {}
-      })();
+      window.google_ad_client = "ca-pub-9341732423335241";
+      try {
+        window.google_page_url = window.location.href;
+      } catch (e) {}
+      window.adsbygoogle = window.adsbygoogle || [];
     </script>
 
     <!-- Google AdSense Official Script -->
