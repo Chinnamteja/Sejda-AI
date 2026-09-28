@@ -23,6 +23,8 @@ import {
   Lock,
   ArrowLeft,
   Search,
+  Menu,
+  X,
 } from 'lucide-react';
 import { ToolId } from '../types';
 import { TOOLS_DIRECTORY } from '../data/toolsDirectory';
@@ -35,6 +37,7 @@ interface HeaderProps {
   documentName?: string;
   onOpenPricingModal: () => void;
   onShowDesktopInfo?: () => void;
+  onOpenSearch?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -44,8 +47,10 @@ export const Header: React.FC<HeaderProps> = ({
   documentName,
   onOpenPricingModal,
   onShowDesktopInfo,
+  onOpenSearch,
 }) => {
   const [allToolsOpen, setAllToolsOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchFilter, setSearchFilter] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -233,83 +238,181 @@ export const Header: React.FC<HeaderProps> = ({
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <span>Quick and simple online service, no installation required!</span>
-                    <button
-                      onClick={() => {
+                  <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <a
+                        href="/guides/"
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey) {
+                            e.preventDefault();
+                            onSelectTool('guides');
+                            setAllToolsOpen(false);
+                          }
+                        }}
+                        className="text-slate-600 hover:text-[#18a474] font-medium transition cursor-pointer hover:underline"
+                      >
+                        PDF Guides
+                      </a>
+                      <span>&bull;</span>
+                      <a
+                        href="/about.html"
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey) {
+                            e.preventDefault();
+                            onSelectTool('about');
+                            setAllToolsOpen(false);
+                          }
+                        }}
+                        className="text-slate-600 hover:text-[#18a474] font-medium transition cursor-pointer hover:underline"
+                      >
+                        About Us
+                      </a>
+                      <span>&bull;</span>
+                      <a
+                        href="/contact.html"
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey) {
+                            e.preventDefault();
+                            onSelectTool('contact');
+                            setAllToolsOpen(false);
+                          }
+                        }}
+                        className="text-slate-600 hover:text-[#18a474] font-medium transition cursor-pointer hover:underline"
+                      >
+                        Contact
+                      </a>
+                      <span>&bull;</span>
+                      <a
+                        id="header-dropdown-privacy-btn"
+                        href="/privacy.html"
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey) {
+                            e.preventDefault();
+                            onSelectTool('privacy');
+                            setAllToolsOpen(false);
+                          }
+                        }}
+                        className="text-slate-600 hover:text-[#18a474] font-medium transition cursor-pointer hover:underline"
+                      >
+                        Privacy Policy
+                      </a>
+                      <span>&bull;</span>
+                      <a
+                        id="header-dropdown-sitemap-btn"
+                        href="/sitemap.html"
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey) {
+                            e.preventDefault();
+                            onSelectTool('sitemap');
+                            setAllToolsOpen(false);
+                          }
+                        }}
+                        className="text-slate-600 hover:text-[#18a474] font-medium transition cursor-pointer hover:underline"
+                      >
+                        Sitemap Index
+                      </a>
+                    </div>
+                    <a
+                      href="/"
+                      onClick={(e) => {
+                        e.preventDefault();
                         onSelectTool('home');
                         setAllToolsOpen(false);
                       }}
-                      className="text-[#18a474] font-semibold hover:underline"
+                      className="text-[#18a474] font-semibold hover:underline cursor-pointer"
                     >
                       View Home Overview →
-                    </button>
+                    </a>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Quick Header Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-1">
-              <button
+            {/* Main Navigation Menu (Visible on Desktop/Tablet with real <a> tags for SEO) */}
+            <nav aria-label="Main Navigation" className="hidden lg:flex items-center space-x-1">
+              <a
                 id="nav-edit-btn"
-                onClick={() => onSelectTool('edit')}
-                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                href="/#edit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectTool('edit');
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'edit'
                     ? 'text-[#18a474] bg-emerald-50'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Edit
-              </button>
-              <button
+              </a>
+              <a
                 id="nav-fill-sign-btn"
-                onClick={() => onSelectTool('fill_sign')}
-                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                href="/#fill_sign"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectTool('fill_sign');
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'fill_sign'
                     ? 'text-[#18a474] bg-emerald-50'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Fill & Sign
-              </button>
-              <button
+              </a>
+              <a
                 id="nav-merge-btn"
-                onClick={() => onSelectTool('merge')}
-                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                href="/#merge"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectTool('merge');
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'merge'
                     ? 'text-[#18a474] bg-emerald-50'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Merge
-              </button>
-              <button
+              </a>
+              <a
                 id="nav-split-btn"
-                onClick={() => onSelectTool('split')}
-                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                href="/#split"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectTool('split');
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'split'
                     ? 'text-[#18a474] bg-emerald-50'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Split
-              </button>
-              <button
+              </a>
+              <a
                 id="nav-compress-btn"
-                onClick={() => onSelectTool('compress')}
-                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                href="/#compress"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectTool('compress');
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentTool === 'compress'
                     ? 'text-[#18a474] bg-emerald-50'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
                 Compress
-              </button>
-              <button
+              </a>
+              <a
                 id="nav-ai-suite-btn"
-                onClick={() => onSelectTool('ai_chat')}
-                className={`px-3 py-1.5 text-sm font-semibold rounded-lg flex items-center space-x-1.5 transition-colors cursor-pointer ${
+                href="/#ai_chat"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectTool('ai_chat');
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg flex items-center space-x-1 transition-colors cursor-pointer ${
                   currentTool.startsWith('ai_')
                     ? 'text-emerald-800 bg-emerald-100/70'
                     : 'text-emerald-700 hover:bg-emerald-50/80'
@@ -317,12 +420,78 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                 <span>AI Tools</span>
-              </button>
+              </a>
+              <a
+                id="nav-guides-btn"
+                href="/guides/"
+                onClick={(e) => {
+                  if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    onSelectTool('guides');
+                  }
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                  currentTool === 'guides'
+                    ? 'text-[#18a474] bg-emerald-50 font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+                }`}
+              >
+                Guides
+              </a>
+              <a
+                id="nav-about-btn"
+                href="/about.html"
+                onClick={(e) => {
+                  if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    onSelectTool('about');
+                  }
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                  currentTool === 'about'
+                    ? 'text-[#18a474] bg-emerald-50 font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+                }`}
+              >
+                About
+              </a>
+              <a
+                id="nav-contact-btn"
+                href="/contact.html"
+                onClick={(e) => {
+                  if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    onSelectTool('contact');
+                  }
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                  currentTool === 'contact'
+                    ? 'text-[#18a474] bg-emerald-50 font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+                }`}
+              >
+                Contact
+              </a>
             </nav>
           </div>
 
-          {/* Right Header Options: Pricing / Desktop App / Free Account - Exactly the same on all pages */}
+          {/* Right Header Options: Search / Pricing / Desktop App / Free Account / Mobile Menu Toggle */}
           <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+            {onOpenSearch && (
+              <button
+                id="header-search-palette-btn"
+                onClick={onOpenSearch}
+                className="hidden sm:inline-flex items-center space-x-1.5 px-2.5 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-800 rounded-lg border border-slate-200/80 text-xs transition cursor-pointer"
+                title="Search all tools and guides (⌘K)"
+              >
+                <Search className="w-3.5 h-3.5 text-slate-400" />
+                <span className="hidden md:inline">Quick Search</span>
+                <kbd className="text-[10px] font-mono bg-white text-slate-400 px-1 py-0.2 rounded border border-slate-200 shadow-2xs">
+                  ⌘K
+                </kbd>
+              </button>
+            )}
+
             <button
               id="header-pricing-btn"
               onClick={onOpenPricingModal}
@@ -336,13 +505,174 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="header-account-btn"
               onClick={onOpenPricingModal}
-              className="text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 rounded-lg border border-slate-200/60 transition cursor-pointer whitespace-nowrap shadow-2xs"
+              className="hidden sm:inline-flex text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 rounded-lg border border-slate-200/60 transition cursor-pointer whitespace-nowrap shadow-2xs"
             >
               Free Account (3 tasks/hr)
+            </button>
+
+            {/* Mobile Menu Button (Accessible on Mobile & Tablet) */}
+            <button
+              id="header-mobile-menu-toggle"
+              type="button"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Navigation Menu'}
+              className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile & Small Screen Navigation Drawer */}
+      {mobileMenuOpen && (
+        <div id="mobile-nav-menu" className="lg:hidden border-t border-slate-200 bg-white/98 shadow-md">
+          <nav aria-label="Mobile Navigation" className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-semibold">
+            <a
+              href="/#edit"
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectTool('edit');
+                setMobileMenuOpen(false);
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>PDF Editor</span>
+            </a>
+            <a
+              href="/#fill_sign"
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectTool('fill_sign');
+                setMobileMenuOpen(false);
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>Fill & Sign</span>
+            </a>
+            <a
+              href="/#merge"
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectTool('merge');
+                setMobileMenuOpen(false);
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>Merge PDF</span>
+            </a>
+            <a
+              href="/#split"
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectTool('split');
+                setMobileMenuOpen(false);
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>Split PDF</span>
+            </a>
+            <a
+              href="/#compress"
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectTool('compress');
+                setMobileMenuOpen(false);
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>Compress PDF</span>
+            </a>
+            <a
+              href="/#ai_chat"
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectTool('ai_chat');
+                setMobileMenuOpen(false);
+              }}
+              className="p-2.5 rounded-lg bg-emerald-50 text-emerald-800 flex items-center space-x-2 font-bold"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              <span>AI Document Suite</span>
+            </a>
+            <a
+              href="/guides/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('guides');
+                  setMobileMenuOpen(false);
+                }
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>PDF Guides (25+)</span>
+            </a>
+            <a
+              href="/about.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('about');
+                  setMobileMenuOpen(false);
+                }
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>About Us</span>
+            </a>
+            <a
+              href="/contact.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('contact');
+                  setMobileMenuOpen(false);
+                }
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>Contact Us</span>
+            </a>
+            <a
+              href="/privacy.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('privacy');
+                  setMobileMenuOpen(false);
+                }
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-[#18a474] font-bold"
+            >
+              <span>Privacy Policy</span>
+            </a>
+            <a
+              href="/sitemap.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('sitemap');
+                  setMobileMenuOpen(false);
+                }
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
+            >
+              <span>HTML Sitemap</span>
+            </a>
+            <button
+              type="button"
+              onClick={() => {
+                onOpenPricingModal();
+                setMobileMenuOpen(false);
+              }}
+              className="p-2.5 rounded-lg bg-emerald-600 text-white font-bold text-center"
+            >
+              <span>Upgrade to Pro</span>
+            </button>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

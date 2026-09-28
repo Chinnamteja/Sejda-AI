@@ -17,6 +17,7 @@ import {
   HardDrive,
   ShieldCheck,
   FolderOpen,
+  Sparkles,
 } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import { LoadedDocument } from '../types';
@@ -401,6 +402,65 @@ export const MergeTool: React.FC<MergeToolProps> = ({
           </div>
         </div>
       )}
+
+      {/* Content Depth & Informational Guide */}
+      <div className="mt-16 pt-12 border-t border-slate-200 space-y-10 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#18a474] flex items-center justify-center font-bold">
+              <Files className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-sm">Visual Page & File Reordering</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Arrange documents in your preferred order by clicking Move Up or Move Down before executing the merge.
+            </p>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#18a474] flex items-center justify-center font-bold">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-sm">Form & Bookmark Preservation</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Maintains internal document outlines, bookmarks, table of contents links, and standardized vector coordinates.
+            </p>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#18a474] flex items-center justify-center font-bold">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-sm">Zero Installation Required</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Executes directly in any modern browser without installing heavy print drivers or third-party background software.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
+          <h4 className="font-bold text-slate-900 text-sm">How to Merge PDF Files</h4>
+          <div className="space-y-3 text-xs text-slate-600">
+            <div>
+              <span className="font-bold text-slate-800">1. Select Multiple Documents:</span>
+              <p className="mt-0.5 text-slate-500">
+                Click Upload PDF Files to select two or more files from your device.
+              </p>
+            </div>
+            <div>
+              <span className="font-bold text-slate-800">2. Review & Re-order:</span>
+              <p className="mt-0.5 text-slate-500">
+                Verify the sequential order of your pages. Remove unwanted files or add additional pages as needed.
+              </p>
+            </div>
+            <div>
+              <span className="font-bold text-slate-800">3. Merge & Download:</span>
+              <p className="mt-0.5 text-slate-500">
+                Click Merge PDF Files to produce a unified, clean document with zero watermarks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

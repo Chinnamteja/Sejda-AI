@@ -12,12 +12,14 @@ interface LegalModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialTab?: LegalTab;
+  onOpenFullPage?: (tab: LegalTab) => void;
 }
 
 export const LegalModal: React.FC<LegalModalProps> = ({
   isOpen,
   onClose,
   initialTab = 'privacy',
+  onOpenFullPage,
 }) => {
   const [activeTab, setActiveTab] = useState<LegalTab>(initialTab);
 
@@ -245,13 +247,31 @@ export const LegalModal: React.FC<LegalModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
-          <span className="text-xs text-slate-400">
-            Publisher Account: <code className="font-mono text-slate-600">pub-9341732423335241</code>
-          </span>
+        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center space-x-3 text-xs text-slate-500">
+            <span>
+              Publisher Account: <code className="font-mono text-slate-600">pub-9341732423335241</code>
+            </span>
+            {onOpenFullPage && (
+              <>
+                <span>&bull;</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onOpenFullPage(activeTab);
+                  }}
+                  className="text-[#18a474] font-bold hover:underline inline-flex items-center space-x-1 cursor-pointer"
+                >
+                  <span>Open Full Privacy Page</span>
+                  <ExternalLink className="w-3 h-3 ml-0.5" />
+                </button>
+              </>
+            )}
+          </div>
           <button
             onClick={onClose}
-            className="px-5 py-2 bg-[#18a474] hover:bg-[#159167] text-white text-xs font-bold rounded-lg transition shadow-xs"
+            className="px-5 py-2 bg-[#18a474] hover:bg-[#159167] text-white text-xs font-bold rounded-lg transition shadow-xs cursor-pointer"
           >
             I Understand & Agree
           </button>

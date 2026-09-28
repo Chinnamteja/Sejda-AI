@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google; connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com; media-src 'self' data: blob:; object-src 'none'; base-uri 'self';">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF to JPG & PNG Conversion: Rasterization Resolution, DPI Settings & Color Profiles - Sejda</title>
+  <meta name="description" content="Complete guide to converting PDF pages into crisp JPG and PNG image files. Covers DPI benchmarks, CMYK to sRGB color matrices, and batch extraction.">
+  <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/pdf-to-jpg-image-extraction-guide.html">
+  <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <meta property="og:title" content="PDF to JPG & PNG Conversion: Rasterization Resolution, DPI Settings & Color Profiles">
+  <meta property="og:description" content="Complete guide to converting PDF pages into crisp JPG and PNG image files. Covers DPI benchmarks, CMYK to sRGB color matrices, and batch extraction.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/pdf-to-jpg-image-extraction-guide.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #18a474; --primary-dark: #159167; --text: #1e293b; --muted: #64748b; --border: #e2e8f0; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--text); background: #fcfdfd; margin: 0; line-height: 1.7; }
+    header { background: #ffffff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .header-inner { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 24px; font-weight: 800; color: var(--primary); text-decoration: none; }
+    nav a { color: var(--text); text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: 600; transition: color 0.15s; }
+    nav a:hover { color: var(--primary); }
+    .container { max-width: 840px; margin: 40px auto; padding: 0 20px; }
+    .card { background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .tag { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.05em; }
+    h1 { font-size: 32px; font-weight: 800; color: #0f172a; line-height: 1.3; margin-top: 0; }
+    h2 { font-size: 22px; font-weight: 700; color: #0f172a; margin-top: 36px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 17px; font-weight: 700; color: #334155; margin-top: 24px; }
+    p, li { font-size: 15px; color: #334155; }
+    table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 12px 14px; text-align: left; }
+    th { background: #f8fafc; font-weight: 700; color: #0f172a; }
+    .callout { background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 20px; margin: 24px 0; }
+    .cta-box { background: #0f172a; color: white; border-radius: 14px; padding: 28px; text-align: center; margin: 36px 0; }
+    .cta-box h3 { color: white; margin-top: 0; }
+    .cta-box p { color: #94a3b8; }
+    .cta-box a { display: inline-block; background: var(--primary); color: white; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; margin-top: 12px; }
+    .cta-box a:hover { background: var(--primary-dark); }
+    footer { background: #ffffff; border-top: 1px solid var(--border); padding: 40px 20px; margin-top: 60px; font-size: 13px; color: var(--muted); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer-links a { color: var(--muted); text-decoration: none; margin-right: 16px; }
+    .footer-links a:hover { color: var(--primary); }
+    .breadcrumb { font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
+    .breadcrumb a { color: #64748b; text-decoration: none; }
+    .breadcrumb a:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">sejda <span style="font-size: 10px; background: #ecfdf5; color: #18a474; padding: 2px 8px; border-radius: 6px; border: 1px solid #a7f3d0;">AI</span></a>
+      <nav aria-label="Main Navigation">
+        <a href="/">Home</a>
+        <a href="/#edit">PDF Editor</a>
+        <a href="/#compress">Compress</a>
+        <a href="/#merge">Merge</a>
+        <a href="/guides/">Guides Hub</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> &rsaquo; <a href="/guides/">Knowledge Base</a> &rsaquo; <span>Conversion</span>
+    </div>
+    <article class="card">
+      <div class="tag">Image Processing • 910 Words • 7 Min Read</div>
+      <h1>PDF to JPG & PNG Conversion: Rasterization Resolution, DPI Settings & Color Profiles</h1>
+      
+      <p>
+        While PDF is the premier standard for multi-page document distribution, many digital environments—such as social media marketing, content management systems (WordPress, Shopify), and web presentation decks—require raster image formats like JPEG or PNG.
+      </p>
+      <p>
+        Converting a vector-based PDF page into a raster graphic involves sophisticated rasterization: interpreting vector Bezier curves, font outlines, and embedded bitmaps and rendering them onto a two-dimensional grid of pixels. 
+        In this guide, we analyze the critical variables governing rasterization quality: Dots Per Inch (DPI), color space conversion, and format selection.
+      </p>
+
+      <h2>DPI Benchmarks: Matching Resolution to Your Use Case</h2>
+      <p>
+        The resolution of a rendered image determines both its visual clarity and file size. Choosing the wrong DPI leads to either unreadable, blurry text or unnecessarily gargantuan image files:
+      </p>
+      <ul>
+        <li><strong>72 DPI (Web &amp; Email Previews):</strong> Produces lightweight, fast-loading images suitable for email thumbnails and quick browser previews. Text remains legible at 100% zoom but degrades when zoomed in.</li>
+        <li><strong>150 DPI (Standard Screen &amp; Presentations):</strong> The optimal balance between sharpness and efficiency for PowerPoint decks, iPad tablets, and full-width website hero banners.</li>
+        <li><strong>300 DPI (High-Resolution Print &amp; Archival):</strong> The mandatory standard for commercial printing, legal evidentiary exhibits, and OCR re-processing. Text remains razor-sharp even when magnified 400%.</li>
+      </ul>
+
+      <h2>JPEG vs. PNG: Which Format Should You Choose?</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Characteristic</th>
+            <th>JPEG (Joint Photographic Experts Group)</th>
+            <th>PNG (Portable Network Graphics)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Compression Algorithm</strong></td>
+            <td>Lossy DCT (Discrete Cosine Transform)</td>
+            <td>Lossless Deflate / LZ77</td>
+          </tr>
+          <tr>
+            <td><strong>Best For</strong></td>
+            <td>Photo-heavy scans, magazines, flyers</td>
+            <td>Text contracts, line-art schematics, charts</td>
+          </tr>
+          <tr>
+            <td><strong>Transparency Support</strong></td>
+            <td>No (White background default)</td>
+            <td>Yes (Full Alpha Channel)</td>
+          </tr>
+          <tr>
+            <td><strong>Typical File Size</strong></td>
+            <td>Compact (300 KB – 1.2 MB per page)</td>
+            <td>Larger (1.5 MB – 5 MB per page)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>CMYK to sRGB Color Space Transformation</h2>
+      <p>
+        Many professional print PDFs utilize the CMYK (Cyan, Magenta, Yellow, Key/Black) subtractive color model calibrated for physical offset presses. 
+        However, web browsers and mobile screens operate in the additive sRGB color space. 
+        If a converter blindly dumps CMYK values into a standard JPEG header without applying color profile transformation matrices (such as SWOP or Fogra39 to sRGB), colors will appear washed out, neon, or inverted. 
+        Sejda's conversion engine utilizes high-precision color management algorithms to guarantee that brand colors and photo tones render naturally on all digital screens.
+      </p>
+
+      <h2>How to Convert PDF Pages to Images with Sejda</h2>
+      <ol>
+        <li>Open the <a href="/#pdf_to_jpg">Sejda PDF to JPG Tool</a>.</li>
+        <li>Drag and drop your PDF file into the upload zone.</li>
+        <li>Select your preferred image resolution: <em>Medium (150 DPI)</em> or <em>High (300 DPI)</em>.</li>
+        <li>Choose whether to convert entire pages into images or extract only embedded photographs.</li>
+        <li>Click <strong>Convert to JPG</strong> and download your individual page images or bundled ZIP archive.</li>
+      </ol>
+
+      <div class="cta-box">
+        <h3>Extract Crisp Images from Your PDF</h3>
+        <p>Convert pages to high-resolution JPEG or PNG images in seconds with zero data retention.</p>
+        <a href="/#pdf_to_jpg">Launch PDF to JPG Converter &rarr;</a>
+      </div>
+    
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; 2026 Sejda BV. All rights reserved. &bull; AdSense Publisher: pub-9341732423335241</div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/cookies.html">Cookies</a>
+        <a href="/about.html">About Us</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/sitemap.html">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

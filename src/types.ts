@@ -28,7 +28,14 @@ export type ToolId =
   | 'ai_translate'
   | 'ai_extract'
   | 'ai_audit'
-  | 'ai_rewrite';
+  | 'ai_rewrite'
+  | 'privacy'
+  | 'terms'
+  | 'cookies'
+  | 'sitemap'
+  | 'about'
+  | 'contact'
+  | 'guides';
 
 export type ToolCategory =
   | 'popular'

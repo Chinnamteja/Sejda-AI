@@ -446,6 +446,59 @@ export const CompressTool: React.FC<CompressToolProps> = ({
           </div>
         </div>
       )}
+
+      {/* Content Depth & Informational Guide */}
+      <div className="mt-16 pt-12 border-t border-slate-200 space-y-10 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#18a474] flex items-center justify-center font-bold">
+              <Minimize2 className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-sm">Vector & Font Optimization</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Redundant metadata, unused embedded font glyphs, and repeated document streams are eliminated without loss of visual fidelity.
+            </p>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#18a474] flex items-center justify-center font-bold">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-sm">Ephemeral Memory Purge</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Files are processed in sandboxed memory. All temporary files are permanently destroyed automatically within 2 hours.
+            </p>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#18a474] flex items-center justify-center font-bold">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-sm">Adaptive Quality Scaling</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Choose between Recommended (optimal screen & print balance), Extreme (email friendly &lt; 1MB), or Low compression.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
+          <h4 className="font-bold text-slate-900 text-sm">PDF Compression Technical FAQ</h4>
+          <div className="space-y-3 text-xs text-slate-600">
+            <div>
+              <span className="font-bold text-slate-800">Will my document text become blurry?</span>
+              <p className="mt-0.5 text-slate-500">
+                No. PDF text and vectors remain resolution-independent. Only high-DPI raster images and invisible metadata streams are optimized.
+              </p>
+            </div>
+            <div>
+              <span className="font-bold text-slate-800">Can I compress scanned invoices and receipts?</span>
+              <p className="mt-0.5 text-slate-500">
+                Yes. Scanned PDFs typically achieve 60% to 85% compression by standardizing color palettes and removing camera noise.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

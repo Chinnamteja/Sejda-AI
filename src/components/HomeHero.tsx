@@ -195,11 +195,19 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
       </div>
 
       {/* Trust & Guarantee Pill */}
-      <div className="mt-6 flex items-center justify-center space-x-2 text-xs text-slate-500">
-        <ShieldCheck className="w-4 h-4 text-[#18a474]" />
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-1.5 text-xs text-slate-500 text-center px-4">
+        <ShieldCheck className="w-4 h-4 text-[#18a474] shrink-0" />
         <span>
           Files stay private. Automatically deleted after 2 hours. Free service for documents up to 200 pages or 50 MB and 3 tasks per hour.
         </span>
+        <button
+          type="button"
+          onClick={() => onSelectTool('privacy')}
+          className="text-[#18a474] font-semibold hover:underline cursor-pointer ml-1 inline-flex items-center"
+        >
+          <span>Read Privacy Policy</span>
+          <span className="ml-0.5">&rarr;</span>
+        </button>
       </div>
 
       {/* Sejda Desktop Software Callout for All OS */}

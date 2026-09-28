@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HomeHero } from './components/HomeHero';
 import { ToolsGrid } from './components/ToolsGrid';
@@ -19,6 +19,13 @@ import { PricingModal } from './components/PricingModal';
 import { DesktopModal } from './components/DesktopModal';
 import { DesktopWindowFrame } from './components/DesktopWindowFrame';
 import { LegalModal, LegalTab } from './components/LegalModal';
+import { PrivacyPage } from './components/PrivacyPage';
+import { SitemapPage } from './components/SitemapPage';
+import { AboutPage } from './components/AboutPage';
+import { ContactPage } from './components/ContactPage';
+import { GuidesHubPage } from './components/GuidesHubPage';
+import { HomeContentDepth } from './components/HomeContentDepth';
+import { CommandPalette } from './components/CommandPalette';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { usePWAInstall } from './hooks/usePWAInstall';
 import { ToolId, LoadedDocument } from './types';
@@ -34,6 +41,7 @@ export default function App() {
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const [isDesktopModalOpen, setIsDesktopModalOpen] = useState(false);
   const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [legalTab, setLegalTab] = useState<LegalTab>('privacy');
   const [isDesktopFrameActive, setIsDesktopFrameActive] = useState(false);
   const { detectedOS } = usePWAInstall();
@@ -43,6 +51,50 @@ export default function App() {
     setNotification(msg);
     setTimeout(() => setNotification(null), 3500);
   };
+
+  // Synchronize hash for direct deep-linking (e.g. /#privacy, /#terms, /#cookies, /#sitemap)
+  useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash.toLowerCase().replace('#', '').trim();
+      if (hash === 'privacy' || hash === 'privacypolicy' || hash === 'privacy-policy') {
+        setActiveTool('privacy');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === 'terms' || hash === 'termsofservice') {
+        setActiveTool('terms');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === 'cookies' || hash === 'adsense') {
+        setActiveTool('cookies');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === 'sitemap' || hash === 'sitemaps') {
+        setActiveTool('sitemap');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === 'about' || hash === 'about-us') {
+        setActiveTool('about');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === 'contact' || hash === 'contact-us') {
+        setActiveTool('contact');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === 'guides' || hash === 'knowledge' || hash === 'articles') {
+        setActiveTool('guides');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    syncFromHash();
+    window.addEventListener('hashchange', syncFromHash);
+    return () => window.removeEventListener('hashchange', syncFromHash);
+  }, []);
+
+  // Global keyboard shortcut for Command Palette (Cmd+K / Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleOpenLocalFile = async () => {
     if (typeof window !== 'undefined' && 'showOpenFilePicker' in window) {
@@ -74,8 +126,22 @@ export default function App() {
   const handleSelectTool = (toolId: ToolId) => {
     if (toolId === 'home') {
       setActiveTool(null);
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
     } else {
       setActiveTool(toolId);
+      if (
+        toolId === 'privacy' ||
+        toolId === 'terms' ||
+        toolId === 'cookies' ||
+        toolId === 'sitemap' ||
+        toolId === 'about' ||
+        toolId === 'contact' ||
+        toolId === 'guides'
+      ) {
+        window.location.hash = toolId;
+      }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -181,6 +247,13 @@ export default function App() {
               </div>
             </div>
           </section>
+
+          {/* Deep Content: Step Guide, Feature Matrix, Technical Specs & Authoritative FAQs */}
+          <HomeContentDepth
+            onSelectTool={handleSelectTool}
+            onOpenPricing={() => setIsPricingModalOpen(true)}
+            onOpenDesktopModal={() => setIsDesktopModalOpen(true)}
+          />
         </div>
       );
     }
@@ -336,6 +409,70 @@ export default function App() {
           />
         );
 
+      // Dedicated Legal & Privacy Pages
+      case 'privacy':
+        return (
+          <PrivacyPage
+            initialTab="privacy"
+            onBackToHome={handleBackToHome}
+            onSelectTool={handleSelectTool}
+            onOpenPricing={() => setIsPricingModalOpen(true)}
+          />
+        );
+
+      case 'terms':
+        return (
+          <PrivacyPage
+            initialTab="terms"
+            onBackToHome={handleBackToHome}
+            onSelectTool={handleSelectTool}
+            onOpenPricing={() => setIsPricingModalOpen(true)}
+          />
+        );
+
+      case 'cookies':
+        return (
+          <PrivacyPage
+            initialTab="cookies"
+            onBackToHome={handleBackToHome}
+            onSelectTool={handleSelectTool}
+            onOpenPricing={() => setIsPricingModalOpen(true)}
+          />
+        );
+
+      case 'sitemap':
+        return (
+          <SitemapPage
+            onSelectTool={handleSelectTool}
+            onBackToHome={handleBackToHome}
+            onOpenPricing={() => setIsPricingModalOpen(true)}
+          />
+        );
+
+      case 'about':
+        return (
+          <AboutPage
+            onBackToHome={handleBackToHome}
+            onSelectTool={handleSelectTool}
+          />
+        );
+
+      case 'contact':
+        return (
+          <ContactPage
+            onBackToHome={handleBackToHome}
+            onSelectTool={handleSelectTool}
+          />
+        );
+
+      case 'guides':
+        return (
+          <GuidesHubPage
+            onBackToHome={handleBackToHome}
+            onSelectTool={handleSelectTool}
+          />
+        );
+
       // Default to full PDF Editor
       case 'pdf_editor':
       case 'edit':
@@ -375,22 +512,37 @@ export default function App() {
         documentName={currentDocument?.name}
         onOpenPricingModal={() => setIsPricingModalOpen(true)}
         onShowDesktopInfo={() => setIsDesktopModalOpen(true)}
+        onOpenSearch={() => setIsCommandPaletteOpen(true)}
       />
 
       {/* Main Viewport Content */}
       <main className="flex-1">{renderActiveView()}</main>
 
-      {/* Global Footer (shown on landing page) */}
-      {!activeTool && (
+      {/* Global Footer (shown on landing page, legal/privacy, sitemap, about, contact, guides) */}
+      {(!activeTool ||
+        activeTool === 'privacy' ||
+        activeTool === 'terms' ||
+        activeTool === 'cookies' ||
+        activeTool === 'sitemap' ||
+        activeTool === 'about' ||
+        activeTool === 'contact' ||
+        activeTool === 'guides') && (
         <Footer
           onSelectTool={handleSelectTool}
           onOpenPricing={() => setIsPricingModalOpen(true)}
           onOpenLegal={(tab) => {
-            setLegalTab(tab);
-            setIsLegalModalOpen(true);
+            handleSelectTool(tab as ToolId);
           }}
         />
       )}
+
+      {/* Command Palette / Quick Search Modal */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onSelectTool={handleSelectTool}
+        onOpenPricing={() => setIsPricingModalOpen(true)}
+      />
 
       {/* Desktop Software Hub Modal */}
       <DesktopModal
@@ -405,6 +557,10 @@ export default function App() {
         isOpen={isLegalModalOpen}
         onClose={() => setIsLegalModalOpen(false)}
         initialTab={legalTab}
+        onOpenFullPage={(tab) => {
+          setIsLegalModalOpen(false);
+          handleSelectTool(tab as ToolId);
+        }}
       />
 
       {/* Offline Mode Indicator */}

@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
               </p>
             </div>
           </div>
-          <div className="flex items-center space-x-6 text-xs text-slate-500 font-medium">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2 text-xs text-slate-500 font-medium">
             <span className="flex items-center space-x-1">
               <Lock className="w-3.5 h-3.5 text-[#18a474]" />
               <span>End-to-End TLS Security</span>
@@ -41,7 +41,19 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
               <Sparkles className="w-3.5 h-3.5 text-[#18a474]" />
               <span>Gemini 3.8 Intelligence</span>
             </span>
-            <span>GDPR & ISO Compliant</span>
+            <a
+              href="/privacy.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onOpenLegal?.('privacy');
+                }
+              }}
+              className="text-[#18a474] font-bold hover:underline cursor-pointer flex items-center space-x-1"
+            >
+              <span>View Privacy Policy</span>
+              <span>&rarr;</span>
+            </a>
           </div>
         </div>
       </div>
@@ -55,44 +67,64 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  onClick={() => onSelectTool('edit')}
+                <a
+                  href="/#edit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('edit');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   PDF Editor
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('fill_sign')}
+                <a
+                  href="/#fill_sign"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('fill_sign');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Fill & Sign PDF
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('watermark')}
+                <a
+                  href="/#watermark"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('watermark');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Watermark PDF
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('crop')}
+                <a
+                  href="/#crop"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('crop');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Crop PDF
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('protect')}
+                <a
+                  href="/#protect"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('protect');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Protect & Encrypt
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -103,44 +135,64 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  onClick={() => onSelectTool('merge')}
+                <a
+                  href="/#merge"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('merge');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Merge PDF Files
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('split')}
+                <a
+                  href="/#split"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('split');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Split PDF
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('extract_pages')}
+                <a
+                  href="/#extract_pages"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('extract_pages');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Extract Pages
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('delete_pages')}
+                <a
+                  href="/#delete_pages"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('delete_pages');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Delete Pages
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('rotate')}
+                <a
+                  href="/#rotate"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('rotate');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Rotate PDF Pages
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -152,52 +204,76 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  onClick={() => onSelectTool('ai_chat')}
+                <a
+                  href="/#ai_chat"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('ai_chat');
+                  }}
                   className="hover:text-[#18a474] text-emerald-800 font-medium transition"
                 >
                   AI Ask PDF / Chat
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('ai_summary')}
+                <a
+                  href="/#ai_summary"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('ai_summary');
+                  }}
                   className="hover:text-[#18a474] text-emerald-800 font-medium transition"
                 >
                   AI PDF Summarizer
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('ai_translate')}
+                <a
+                  href="/#ai_translate"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('ai_translate');
+                  }}
                   className="hover:text-[#18a474] text-emerald-800 font-medium transition"
                 >
                   AI PDF Translator
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('ai_extract')}
+                <a
+                  href="/#ai_extract"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('ai_extract');
+                  }}
                   className="hover:text-[#18a474] text-emerald-800 font-medium transition"
                 >
                   AI Table & Data Extractor
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('ai_audit')}
+                <a
+                  href="/#ai_audit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('ai_audit');
+                  }}
                   className="hover:text-[#18a474] text-emerald-800 font-medium transition"
                 >
                   AI Contract Auditor
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('ai_rewrite')}
+                <a
+                  href="/#ai_rewrite"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('ai_rewrite');
+                  }}
                   className="hover:text-[#18a474] text-emerald-800 font-medium transition"
                 >
                   AI Re-writer & Polish
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -208,28 +284,40 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  onClick={() => onSelectTool('compress')}
+                <a
+                  href="/#compress"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('compress');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   Compress PDF
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('jpg_to_pdf')}
+                <a
+                  href="/#jpg_to_pdf"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('jpg_to_pdf');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   JPG to PDF
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTool('pdf_to_jpg')}
+                <a
+                  href="/#pdf_to_jpg"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectTool('pdf_to_jpg');
+                  }}
                   className="hover:text-[#18a474] transition"
                 >
                   PDF to JPG
-                </button>
+                </a>
               </li>
               <li className="pt-1">
                 <button
@@ -258,29 +346,105 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
           </div>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <button
-              type="button"
-              onClick={() => onOpenLegal?.('terms')}
+            <a
+              href="/about.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('about');
+                }
+              }}
+              className="hover:text-slate-800 cursor-pointer transition text-left"
+            >
+              About Us
+            </a>
+            <span>•</span>
+            <a
+              href="/contact.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('contact');
+                }
+              }}
+              className="hover:text-slate-800 cursor-pointer transition text-left"
+            >
+              Contact Us
+            </a>
+            <span>•</span>
+            <a
+              href="/guides/"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('guides');
+                }
+              }}
+              className="hover:text-slate-800 cursor-pointer transition text-left"
+            >
+              PDF Guides
+            </a>
+            <span>•</span>
+            <a
+              href="/sitemap.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('sitemap');
+                }
+              }}
+              className="text-[#18a474] font-semibold hover:underline cursor-pointer transition text-left"
+            >
+              HTML Sitemap
+            </a>
+            <span>•</span>
+            <a
+              href="/sitemap.xml"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-slate-800 transition text-left"
+            >
+              sitemap.xml
+            </a>
+            <span>•</span>
+            <a
+              href="/terms.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onOpenLegal?.('terms');
+                }
+              }}
               className="hover:text-slate-800 cursor-pointer transition text-left"
             >
               Terms of Service
-            </button>
+            </a>
             <span>•</span>
-            <button
-              type="button"
-              onClick={() => onOpenLegal?.('privacy')}
-              className="hover:text-slate-800 cursor-pointer transition text-left"
+            <a
+              href="/privacy.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onOpenLegal?.('privacy');
+                }
+              }}
+              className="hover:text-slate-800 cursor-pointer transition text-left font-semibold text-[#18a474]"
             >
               Privacy Policy
-            </button>
+            </a>
             <span>•</span>
-            <button
-              type="button"
-              onClick={() => onOpenLegal?.('cookies')}
+            <a
+              href="/cookies.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onOpenLegal?.('cookies');
+                }
+              }}
               className="hover:text-slate-800 cursor-pointer transition text-left"
             >
               Cookies & AdSense
-            </button>
+            </a>
             <span>•</span>
             <span className="text-slate-400">English (US)</span>
           </div>

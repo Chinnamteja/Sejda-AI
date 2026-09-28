@@ -16,9 +16,27 @@ const PORT = 3000;
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Ensure iframe compatibility and crawler access
+// Ensure iframe compatibility, crawler access, and robust Content Security Policy (CSP)
 app.use((req, res, next) => {
   res.removeHeader('X-Frame-Options');
+  res.setHeader(
+    'Content-Security-Policy',
+    [
+      "default-src 'self' data: blob:",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.googletagmanager.com https://www.google-analytics.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net",
+      "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google",
+      "connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com",
+      "media-src 'self' data: blob:",
+      "object-src 'none'",
+      "base-uri 'self'",
+    ].join('; ')
+  );
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   next();
 });
 
@@ -54,10 +72,88 @@ app.get('/ads.txt', (req, res) => {
   res.send('google.com, pub-9341732423335241, DIRECT, f08c47fec0942fa0\n');
 });
 
+// Dedicated HTML routes for crawlers, AdSense review bots, and direct links
+app.get(['/privacy', '/privacy.html'], (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'privacy.html'));
+});
+app.get(['/about', '/about.html'], (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'about.html'));
+});
+app.get(['/contact', '/contact.html'], (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'contact.html'));
+});
+app.get(['/terms', '/terms.html'], (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'terms.html'));
+});
+app.get(['/cookies', '/cookies.html'], (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'cookies.html'));
+});
+app.get(['/sitemap', '/sitemap.html'], (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'sitemap.html'));
+});
+app.use('/guides', express.static(path.join(process.cwd(), 'public', 'guides')));
+
 // Search Engine & AdSense Crawler directives (robots.txt)
 app.get('/robots.txt', (req, res) => {
+  const host = req.get('host') || 'ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app';
+  const proto = req.protocol === 'https' || req.get('x-forwarded-proto') === 'https' ? 'https' : 'http';
   res.type('text/plain');
-  res.send('User-agent: *\nAllow: /\n\nUser-agent: Mediapartners-Google\nAllow: /\n\nUser-agent: AdsBot-Google\nAllow: /\n\nUser-agent: Googlebot\nAllow: /\n');
+  res.send(`User-agent: *\nAllow: /\nSitemap: ${proto}://${host}/sitemap.xml\n\nUser-agent: Mediapartners-Google\nAllow: /\n\nUser-agent: AdsBot-Google\nAllow: /\n\nUser-agent: Googlebot\nAllow: /\n`);
+});
+
+// XML Sitemap route for search crawlers & SEO indexing
+app.get('/sitemap.xml', (req, res) => {
+  const host = req.get('host') || 'ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app';
+  const proto = req.protocol === 'https' || req.get('x-forwarded-proto') === 'https' ? 'https' : 'http';
+  const baseUrl = `${proto}://${host}`;
+  
+  const pages = [
+    { url: '/', priority: '1.0', changefreq: 'daily' },
+    { url: '/privacy.html', priority: '0.9', changefreq: 'weekly' },
+    { url: '/about.html', priority: '0.9', changefreq: 'monthly' },
+    { url: '/contact.html', priority: '0.9', changefreq: 'monthly' },
+    { url: '/terms.html', priority: '0.8', changefreq: 'monthly' },
+    { url: '/cookies.html', priority: '0.8', changefreq: 'monthly' },
+    { url: '/sitemap.html', priority: '0.85', changefreq: 'weekly' },
+    { url: '/guides/', priority: '0.9', changefreq: 'weekly' },
+    { url: '/guides/how-to-compress-pdf.html', priority: '0.85', changefreq: 'monthly' },
+    { url: '/guides/how-to-sign-pdf-legally.html', priority: '0.85', changefreq: 'monthly' },
+    { url: '/guides/extract-tables-from-pdf-to-csv.html', priority: '0.85', changefreq: 'monthly' },
+    { url: '/guides/pdf-security-best-practices.html', priority: '0.85', changefreq: 'monthly' },
+    { url: '/#edit', priority: '0.95', changefreq: 'weekly' },
+    { url: '/#fill_sign', priority: '0.95', changefreq: 'weekly' },
+    { url: '/#merge', priority: '0.95', changefreq: 'weekly' },
+    { url: '/#split', priority: '0.95', changefreq: 'weekly' },
+    { url: '/#compress', priority: '0.95', changefreq: 'weekly' },
+    { url: '/#rotate', priority: '0.90', changefreq: 'weekly' },
+    { url: '/#watermark', priority: '0.85', changefreq: 'weekly' },
+    { url: '/#crop', priority: '0.85', changefreq: 'weekly' },
+    { url: '/#protect', priority: '0.85', changefreq: 'weekly' },
+    { url: '/#jpg_to_pdf', priority: '0.90', changefreq: 'weekly' },
+    { url: '/#pdf_to_jpg', priority: '0.90', changefreq: 'weekly' },
+    { url: '/#ai_chat', priority: '0.90', changefreq: 'weekly' },
+    { url: '/#ai_summary', priority: '0.90', changefreq: 'weekly' },
+    { url: '/#ai_translate', priority: '0.90', changefreq: 'weekly' },
+    { url: '/#ai_extract', priority: '0.90', changefreq: 'weekly' },
+    { url: '/#ai_audit', priority: '0.90', changefreq: 'weekly' },
+  ];
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pages
+  .map(
+    (p) => `  <url>
+    <loc>${baseUrl}${p.url}</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>${p.changefreq}</changefreq>
+    <priority>${p.priority}</priority>
+  </url>`
+  )
+  .join('\n')}
+</urlset>`;
+
+  res.type('application/xml');
+  res.send(xml);
 });
 
 // 1. AI Ask PDF / Chat

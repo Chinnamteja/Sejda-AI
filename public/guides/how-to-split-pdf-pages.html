@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google; connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com; media-src 'self' data: blob:; object-src 'none'; base-uri 'self';">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Split PDF Pages: Extracting Chapters, Splitting in Half, and Bursting Files - Sejda</title>
+  <meta name="description" content="Technical walkthrough of PDF splitting methods: page range extraction, splitting by bookmark chapters, bursting into individual sheets, and size-based splitting.">
+  <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/how-to-split-pdf-pages.html">
+  <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <meta property="og:title" content="How to Split PDF Pages: Extracting Chapters, Splitting in Half, and Bursting Files">
+  <meta property="og:description" content="Technical walkthrough of PDF splitting methods: page range extraction, splitting by bookmark chapters, bursting into individual sheets, and size-based splitting.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/how-to-split-pdf-pages.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #18a474; --primary-dark: #159167; --text: #1e293b; --muted: #64748b; --border: #e2e8f0; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--text); background: #fcfdfd; margin: 0; line-height: 1.7; }
+    header { background: #ffffff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .header-inner { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 24px; font-weight: 800; color: var(--primary); text-decoration: none; }
+    nav a { color: var(--text); text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: 600; transition: color 0.15s; }
+    nav a:hover { color: var(--primary); }
+    .container { max-width: 840px; margin: 40px auto; padding: 0 20px; }
+    .card { background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .tag { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.05em; }
+    h1 { font-size: 32px; font-weight: 800; color: #0f172a; line-height: 1.3; margin-top: 0; }
+    h2 { font-size: 22px; font-weight: 700; color: #0f172a; margin-top: 36px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 17px; font-weight: 700; color: #334155; margin-top: 24px; }
+    p, li { font-size: 15px; color: #334155; }
+    table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 12px 14px; text-align: left; }
+    th { background: #f8fafc; font-weight: 700; color: #0f172a; }
+    .callout { background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 20px; margin: 24px 0; }
+    .cta-box { background: #0f172a; color: white; border-radius: 14px; padding: 28px; text-align: center; margin: 36px 0; }
+    .cta-box h3 { color: white; margin-top: 0; }
+    .cta-box p { color: #94a3b8; }
+    .cta-box a { display: inline-block; background: var(--primary); color: white; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; margin-top: 12px; }
+    .cta-box a:hover { background: var(--primary-dark); }
+    footer { background: #ffffff; border-top: 1px solid var(--border); padding: 40px 20px; margin-top: 60px; font-size: 13px; color: var(--muted); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer-links a { color: var(--muted); text-decoration: none; margin-right: 16px; }
+    .footer-links a:hover { color: var(--primary); }
+    .breadcrumb { font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
+    .breadcrumb a { color: #64748b; text-decoration: none; }
+    .breadcrumb a:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">sejda <span style="font-size: 10px; background: #ecfdf5; color: #18a474; padding: 2px 8px; border-radius: 6px; border: 1px solid #a7f3d0;">AI</span></a>
+      <nav aria-label="Main Navigation">
+        <a href="/">Home</a>
+        <a href="/#edit">PDF Editor</a>
+        <a href="/#compress">Compress</a>
+        <a href="/#merge">Merge</a>
+        <a href="/guides/">Guides Hub</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> &rsaquo; <a href="/guides/">Knowledge Base</a> &rsaquo; <span>Assembly</span>
+    </div>
+    <article class="card">
+      <div class="tag">Page Management • 940 Words • 7 Min Read</div>
+      <h1>How to Split PDF Pages: Extracting Chapters, Splitting in Half, and Bursting Files</h1>
+      
+      <p>
+        Enterprise document repositories, scanning bureaus, and administrative offices frequently deal with oversized compound PDF files. 
+        A single 500-page document might contain an entire fiscal year's supplier invoices, an encyclopedia volume, or a consolidated legal evidentiary docket. 
+        Distributing such massive files wastes bandwidth, breaches corporate email attachment thresholds, and creates significant privacy liabilities when recipients are exposed to unrelated confidential sections.
+      </p>
+      <p>
+        Splitting a PDF allows operators to dissect large files into precise, targeted segments. 
+        In this guide, we explore the different splitting algorithms available in Sejda, their internal behavior, and step-by-step instructions for extracting exactly what you need.
+      </p>
+
+      <h2>The Four Core PDF Splitting Methodologies</h2>
+      <h3>1. Extract Specific Page Ranges</h3>
+      <p>
+        The most common requirement in legal and academic research is extracting specific pages (e.g. pages <code>12-25, 48, 92-104</code>). 
+        Sejda extracts these specific object nodes from the source page tree, compiles a fresh cross-reference table, and outputs a lean, standalone document containing solely the requested pages.
+      </p>
+
+      <h3>2. Split by Bookmark / Chapter Hierarchy</h3>
+      <p>
+        Well-structured e-books, technical manuals, and corporate annual reports use interactive bookmarks to delineate chapters. 
+        Sejda's intelligent bookmark splitter inspects the <code>/Outlines</code> dictionary and automatically slices the document at every top-level bookmark (e.g., Level 1 Headings), saving each chapter into a separate, logically named PDF file.
+      </p>
+
+      <h3>3. Bursting into Single-Page Documents</h3>
+      <p>
+        When processing batches of scanned receipts, employee tax records, or single-page order forms, operators often need to &quot;burst&quot; a 100-page file into 100 separate files. 
+        Sejda automates this in one click, packaging all individual pages into a clean, organized ZIP archive.
+      </p>
+
+      <h3>4. Splitting by Maximum File Size</h3>
+      <p>
+        Certain government portals (such as the US Patent and Trademark Office or court e-filing systems) enforce strict limits—such as a 10 MB or 25 MB ceiling per upload. 
+        Sejda calculates the cumulative byte size of consecutive pages and splits the file at exact boundaries to ensure every resulting segment remains beneath your specified megabyte threshold.
+      </p>
+
+      <h2>Step-by-Step Guide to Splitting with Sejda</h2>
+      <ol>
+        <li>Navigate to the <a href="/#split">Sejda Split PDF Tool</a>.</li>
+        <li>Upload your source document from your local disk or cloud storage.</li>
+        <li>Choose your preferred splitting rule:
+          <ul>
+            <li><strong>Extract Every Page:</strong> Generates individual single-page PDFs.</li>
+            <li><strong>Split by Range:</strong> Type ranges separated by commas (e.g. <code>1-4, 5-10, 11-20</code>).</li>
+            <li><strong>Split Every N Pages:</strong> Divides the file into equal increments (e.g. every 5 pages).</li>
+            <li><strong>Split by Bookmarks:</strong> Automatically segments by table-of-contents chapters.</li>
+          </ul>
+        </li>
+        <li>Click <strong>Split PDF</strong>.</li>
+        <li>Download your individual segments or grab the consolidated ZIP bundle.</li>
+      </ol>
+
+      <h2>Feature Comparison Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Splitting Mode</th>
+            <th>Typical Output</th>
+            <th>Preserves Text Searchability</th>
+            <th>Ideal For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>By Page Range</strong></td>
+            <td>Single consolidated excerpt</td>
+            <td>Yes (100% Vector)</td>
+            <td>Extracting specific contract clauses or case briefs</td>
+          </tr>
+          <tr>
+            <td><strong>Burst (Single Pages)</strong></td>
+            <td>ZIP of N individual files</td>
+            <td>Yes</td>
+            <td>Scanned batch invoices &amp; ID cards</td>
+          </tr>
+          <tr>
+            <td><strong>By Bookmarks</strong></td>
+            <td>Named chapter files</td>
+            <td>Yes</td>
+            <td>Textbooks, manuals &amp; corporate reports</td>
+          </tr>
+          <tr>
+            <td><strong>By Size Threshold</strong></td>
+            <td>Equal MB chunks</td>
+            <td>Yes</td>
+            <td>Meeting court e-filing upload caps</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cta-box">
+        <h3>Need to Split a Large PDF?</h3>
+        <p>Extract pages or burst documents up to 200 pages for free with instant cloud processing.</p>
+        <a href="/#split">Open Sejda Split Tool &rarr;</a>
+      </div>
+    
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; 2026 Sejda BV. All rights reserved. &bull; AdSense Publisher: pub-9341732423335241</div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/cookies.html">Cookies</a>
+        <a href="/about.html">About Us</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/sitemap.html">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
