@@ -41,6 +41,7 @@ export const HomeContentDepth: React.FC<HomeContentDepthProps> = ({
   onOpenDesktopModal,
 }) => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [guideCategory, setGuideCategory] = useState<string>('All');
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -70,6 +71,14 @@ export const HomeContentDepth: React.FC<HomeContentDepthProps> = ({
     {
       q: 'How does the AI Document Copilot handle sensitive document contents?',
       a: 'Our AI features are powered by Google Gemini 3.8. Under our enterprise data agreements, document text submitted for AI summarization, contract audit, or translation is processed ephemerally in RAM and is never retained, logged, or used to train public machine learning foundation models.',
+    },
+    {
+      q: 'How does PDF conversion work for images, scans, and documents?',
+      a: 'Sejda delivers high-fidelity bidirectional PDF conversion for JPG, PNG, WEBP, and TIFF. Raster images are converted with color space normalization and page margin adjustment, while documents preserve vector typography and structural layouts without loss of clarity.',
+    },
+    {
+      q: 'What AI tool compatibility does Sejda offer for document analysis?',
+      a: 'Sejda AI Copilot integrates Google Gemini 3.8 to enable multilingual translation across 100+ languages, contract risk audits, Q&A document chat, and automated financial table extraction directly into CSV, operating strictly in ephemeral memory without model training.',
     },
     {
       q: 'What are the limits of the free service?',
@@ -377,8 +386,27 @@ export const HomeContentDepth: React.FC<HomeContentDepthProps> = ({
           </div>
         </div>
 
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-200/60">
+          {['All', 'Signatures & Forms', 'Optimization & Standards', 'AI Intelligence & OCR', 'Organization & Editing'].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setGuideCategory(cat)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                guideCategory === cat
+                  ? 'bg-[#18a474] text-white shadow-2xs'
+                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+              }`}
+            >
+              {cat === 'All' ? 'All Guides (28)' : cat}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {ALL_GUIDES.slice(0, 9).map((art) => (
+          {ALL_GUIDES.filter((art) => guideCategory === 'All' || art.category === guideCategory)
+            .slice(0, guideCategory === 'All' ? 9 : 12)
+            .map((art) => (
             <div
               key={art.url}
               className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-300 hover:shadow-xs transition flex flex-col justify-between space-y-3"
@@ -418,10 +446,12 @@ export const HomeContentDepth: React.FC<HomeContentDepthProps> = ({
           ))}
         </div>
 
-        <div className="text-center pt-2">
-          <p className="text-xs text-slate-500">
-            Also explore guides on <a href="/guides/pdf-metadata-and-xmp-data-cleaning.html" className="text-[#18a474] font-semibold hover:underline">Metadata Cleaning</a>, <a href="/guides/bates-numbering-for-legal-discovery.html" className="text-[#18a474] font-semibold hover:underline">Bates Numbering</a>, <a href="/guides/pdf-a-archival-compliance-guide.html" className="text-[#18a474] font-semibold hover:underline">PDF/A Archival</a>, <a href="/guides/converting-scanned-handwriting-to-searchable-pdf.html" className="text-[#18a474] font-semibold hover:underline">Handwriting OCR</a>, and <a href="/guides/digital-rights-management-and-pdf-licensing.html" className="text-[#18a474] font-semibold hover:underline">Enterprise DRM</a>.
-          </p>
+        <div className="text-center pt-2 border-t border-slate-200/60 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500">
+          <span>Complete Directory: <a href="/sitemap.html" className="text-[#18a474] font-semibold hover:underline">HTML Sitemap</a></span>
+          <span aria-hidden="true">&bull;</span>
+          <span>Machine Readable: <a href="/sitemap.xml" target="_blank" className="text-[#18a474] font-semibold hover:underline">Root sitemap.xml</a></span>
+          <span aria-hidden="true">&bull;</span>
+          <span>Crawlers: <a href="/robots.txt" target="_blank" className="text-[#18a474] font-semibold hover:underline">robots.txt</a></span>
         </div>
       </section>
 

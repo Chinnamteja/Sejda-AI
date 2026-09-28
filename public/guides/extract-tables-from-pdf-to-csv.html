@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google; connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com; media-src 'self' data: blob:; object-src 'none'; base-uri 'self';">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Extracting Tabular Financial Data from PDF to CSV - Technical Guide</title>
-  <meta name="description" content="Technical guide for accountants, financial analysts, and developers on extracting tables, invoices, and bank statements from PDF into structured CSV with Sejda.">
+  <title>Extract Tables from PDF to CSV and Excel - Sejda PDF</title>
+  >>
   <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/extract-tables-from-pdf-to-csv.html">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -32,16 +34,22 @@
   </style>
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <a href="/" class="logo">sejda</a>
-      <nav aria-label="Main Navigation">
-        <a href="/">Home</a>
-        <a href="/#ai_extract">Extract Tables</a>
-        <a href="/guides/">Guides</a>
-        <a href="/about.html">About</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/privacy.html">Privacy</a>
+    <header>
+    <div class="header-inner" style="max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;">
+      <a href="/" rel="home" class="logo site-logo" title="Sejda: Free Online PDF Editor &amp; Tools" aria-label="Sejda Homepage" style="font-size: 24px; font-weight: 800; color: #18a474; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+        <img src="/icon.svg" alt="Sejda Logo" width="28" height="28" style="vertical-align: middle; border-radius: 6px;" />
+        <span class="site-title">sejda</span>
+        <span class="logo-badge" style="font-size: 11px; background: #ecfdf5; color: #18a474; padding: 2px 8px; border-radius: 6px; border: 1px solid #a7f3d0; margin-left: 4px; font-weight: 700;">AI</span>
+      </a>
+      <nav aria-label="Main Navigation" style="display: flex; gap: 16px; font-size: 14px; font-weight: 600;">
+        <a href="/" style="color: #334155; text-decoration: none;">Home</a>
+        <a href="/#edit" style="color: #334155; text-decoration: none;">PDF Editor</a>
+        <a href="/#compress" style="color: #334155; text-decoration: none;">Compress</a>
+        <a href="/#merge" style="color: #334155; text-decoration: none;">Merge</a>
+        <a href="/guides/" style="color: #334155; text-decoration: none;">Guides</a>
+        <a href="/about.html" style="color: #334155; text-decoration: none;">About</a>
+        <a href="/contact.html" style="color: #334155; text-decoration: none;">Contact</a>
+        <a href="/privacy.html" style="color: #334155; text-decoration: none;">Privacy</a>
       </nav>
     </div>
   </header>
@@ -110,84 +118,62 @@
       </ol>
 
       
-      <section class="deep-dive-enrichment" style="margin-top: 36px; padding-top: 24px; border-top: 1px solid #e2e8f0;">
-        <h2>Advanced Technical Considerations &amp; Standards Compliance</h2>
-        <p>
-          When executing workflows related to <strong>extract tables from pdf to csv</strong> across enterprise, legal, or regulated financial environments, operational reliability depends heavily on strict adherence to the ISO 32000-2 document standard. 
-          Uncontrolled transformations, incompatible parser implementations, and fragmented cross-reference (XREF) tables can cause silent data corruption or introduce liability during discovery proceedings.
-        </p>
-
-        <h3>Empirical Performance Benchmarks</h3>
-        <p>
-          Our engineering research laboratory tested multiple document manipulation engines across high-volume batch workloads. The table below illustrates processing latency, resource consumption, and output stability under peak load:
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Operation Profile</th>
-              <th>Sejda In-Memory RAM Engine</th>
-              <th>Legacy Desktop Suite</th>
-              <th>Open-Source Shell Scripts</th>
-              <th>Recommended SLA</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Standard PDF (1-50 Pages)</td>
-              <td><strong>320 ms</strong> (Zero disk I/O)</td>
-              <td>1,850 ms (Local cache write)</td>
-              <td>920 ms (Child process fork)</td>
-              <td>&lt; 1,000 ms</td>
-            </tr>
-            <tr>
-              <td>Complex Vector Drawings</td>
-              <td><strong>680 ms</strong> (Stream tokenized)</td>
-              <td>3,400 ms (Full re-render)</td>
-              <td>1,750 ms (Rasterized temp)</td>
-              <td>&lt; 2,000 ms</td>
-            </tr>
-            <tr>
-              <td>High-Density Financial Scans</td>
-              <td><strong>1,150 ms</strong> (Lossless Flate)</td>
-              <td>4,900 ms (Heavy swap disk)</td>
-              <td>2,800 ms (Unbuffered stream)</td>
-              <td>&lt; 3,000 ms</td>
-            </tr>
-            <tr>
-              <td>Data Security &amp; Retention</td>
-              <td><strong>Automated 2-Hour Purge</strong></td>
-              <td>Local disk unencrypted</td>
-              <td>Temporary file left in /tmp</td>
-              <td>Strict Zero-Retention</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>Standardized Implementation Checklist</h3>
-        <p>
-          Before committing automated batch operations or deploying client-facing document workflows to production, audit your system against the following four criteria:
-        </p>
-        <ol>
-          <li><strong>Cryptographic Hash Integrity:</strong> Calculate SHA-256 checksums before and after processing to confirm that non-modified content streams remain byte-verifiable.</li>
-          <li><strong>PDF/A Long-Term Archival Certification:</strong> Verify whether the output file must adhere to ISO 19005 (PDF/A-1b or PDF/A-2b), requiring all font programs and device-independent ICC profiles to remain embedded.</li>
-          <li><strong>Ephemeral Cache Flush:</strong> Guarantee that temporary working buffers generated during parsing reside strictly in non-swappable volatile RAM, eliminating forensic data recovery vulnerabilities.</li>
-          <li><strong>Interactive Annotation Normalization:</strong> Check that digital signatures, AcroForm field values, and redactions are flattened into page content streams prior to external distribution.</li>
-        </ol>
-
-        <div class="callout">
-          <strong>Enterprise Architecture Tip:</strong> For mission-critical legal discovery or healthcare records (HIPAA compliance), always execute document transformations in an environment that guarantees end-to-end memory isolation. Sejda's zero-retention guarantee ensures that documents are automatically destroyed after exactly 2 hours, preventing unintended data leaks.
-        </div>
-
-        <h3>Frequently Asked Questions (FAQ)</h3>
-        <p><strong>Q: Will processing my document affect embedded vector bookmarks or hyperlinks?</strong><br>
-        A: No. Sejda parses and preserves the document object hierarchy (Catalog, Pages tree, Outlines, and Annotations), ensuring that internal references and external URLs remain active.</p>
-
-        <p><strong>Q: What happens if an unexpected network disruption occurs during task execution?</strong><br>
-        A: Because Sejda processes data ephemerally, any interrupted task is immediately terminated and flushed from working memory without leaving residual data on public servers.</p>
-      </section>
+      
     
 
-<div class="cta-box">
+
+      <h2>Tabular Parsing Engineering: Lattice vs. Stream Recognition Models</h2>
+      <p>
+        Portable Document Format does not maintain an inherent <code>&lt;table&gt;</code> primitive; rather, visual grids are rendered as isolated text fragments (<code>Tj</code> / <code>TJ</code> operators) positioned across absolute Cartesian coordinates (X, Y). 
+        Extracting clean tabular datasets into CSV or Microsoft Excel requires algorithmic parsing to reconstruct row and column boundaries accurately.
+      </p>
+
+      <h3>Parsing Strategy Comparison</h3>
+      <p>
+        Understanding when to employ Stream algorithms versus Lattice algorithms based on PDF structure:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Parsing Strategy</th>
+            <th>Detection Methodology</th>
+            <th>Best Suited For</th>
+            <th>Error Modes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lattice Parser</strong></td>
+            <td>Detects explicit vector stroke lines (<code>re</code>, <code>m</code>, <code>l</code> operators) creating physical cell rectangles.</td>
+            <td>Invoices, bank statements, structured purchase orders with complete borders.</td>
+            <td>Fails when cells use invisible borders or background fills instead of strokes.</td>
+          </tr>
+          <tr>
+            <td><strong>Stream Parser</strong></td>
+            <td>Clusters text glyph positions along horizontal baselines and computes whitespace margins.</td>
+            <td>SEC 10-K filings, annual reports, academic tables with borderless layouts.</td>
+            <td>Multi-line wrapped column text can inadvertently split into unintended rows.</td>
+          </tr>
+          <tr>
+            <td><strong>OCR Neural Lattice</strong></td>
+            <td>Applies computer vision segmentation to scanned bitmap pages prior to character recognition.</td>
+            <td>Photocopied contracts, legacy paper audits, low-resolution receipts.</td>
+            <td>Requires skew correction and deskewing to prevent staggered row groupings.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Handling Merged Headers and Currency Characters</h3>
+      <p>
+        Sejda's table extraction engine automatically sanitizes common tabular discrepancies:
+      </p>
+      <ul>
+        <li><strong>Parenthetical Negatives:</strong> Automatically converts accounting formats like <code>(14,250.00)</code> into standardized computational values <code>-14250.00</code>.</li>
+        <li><strong>Multi-Page Continuity:</strong> Detects repeating column headers across page breaks and prevents them from appearing as intermittent data rows in final CSV outputs.</li>
+        <li><strong>Unicode Currency Normalization:</strong> Separates monetary symbols ($, &euro;, &pound;, &yen;) into metadata properties or preserves them cleanly without breaking numeric sorting.</li>
+      </ul>
+    
+      <div class="cta-box">
         <h3 style="color: white; margin-top: 0;">Extract your financial tables in seconds</h3>
         <p style="color: #cbd5e1; font-size: 14px; margin-bottom: 0;">Try Sejda's AI Table &amp; Data Extractor. Accurate, confidential, and free up to 3 tasks per hour.</p>
         <a href="/#ai_extract">Extract Tables to CSV &rarr;</a>

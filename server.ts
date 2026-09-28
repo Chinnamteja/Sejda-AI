@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
@@ -18,7 +19,16 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Ensure iframe compatibility, crawler access, and robust Content Security Policy (CSP)
 app.use((req, res, next) => {
-  res.removeHeader('X-Frame-Options');
+  // Clickjacking Protection: For direct visits, crawlers, and security scanners, send X-Frame-Options: DENY
+  const isGoogleIframe = Boolean(
+    req.headers['sec-fetch-dest'] === 'iframe' &&
+    (typeof req.headers.referer === 'string' && req.headers.referer.includes('google.com'))
+  );
+
+  if (!isGoogleIframe) {
+    res.setHeader('X-Frame-Options', 'DENY');
+  }
+
   res.setHeader(
     'Content-Security-Policy',
     [
@@ -28,6 +38,7 @@ app.use((req, res, next) => {
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net",
       "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google",
+      "frame-ancestors 'self' https://*.google.com https://*.googleusercontent.com https://*.run.app https://aistudio.google.com",
       "connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com",
       "media-src 'self' data: blob:",
       "object-src 'none'",
@@ -36,7 +47,9 @@ app.use((req, res, next) => {
   );
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
   next();
 });
 
@@ -106,54 +119,23 @@ app.get('/sitemap.xml', (req, res) => {
   const host = req.get('host') || 'ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app';
   const proto = req.protocol === 'https' || req.get('x-forwarded-proto') === 'https' ? 'https' : 'http';
   const baseUrl = `${proto}://${host}`;
-  
-  const pages = [
-    { url: '/', priority: '1.0', changefreq: 'daily' },
-    { url: '/privacy.html', priority: '0.9', changefreq: 'weekly' },
-    { url: '/about.html', priority: '0.9', changefreq: 'monthly' },
-    { url: '/contact.html', priority: '0.9', changefreq: 'monthly' },
-    { url: '/terms.html', priority: '0.8', changefreq: 'monthly' },
-    { url: '/cookies.html', priority: '0.8', changefreq: 'monthly' },
-    { url: '/sitemap.html', priority: '0.85', changefreq: 'weekly' },
-    { url: '/guides/', priority: '0.9', changefreq: 'weekly' },
-    { url: '/guides/how-to-compress-pdf.html', priority: '0.85', changefreq: 'monthly' },
-    { url: '/guides/how-to-sign-pdf-legally.html', priority: '0.85', changefreq: 'monthly' },
-    { url: '/guides/extract-tables-from-pdf-to-csv.html', priority: '0.85', changefreq: 'monthly' },
-    { url: '/guides/pdf-security-best-practices.html', priority: '0.85', changefreq: 'monthly' },
-    { url: '/#edit', priority: '0.95', changefreq: 'weekly' },
-    { url: '/#fill_sign', priority: '0.95', changefreq: 'weekly' },
-    { url: '/#merge', priority: '0.95', changefreq: 'weekly' },
-    { url: '/#split', priority: '0.95', changefreq: 'weekly' },
-    { url: '/#compress', priority: '0.95', changefreq: 'weekly' },
-    { url: '/#rotate', priority: '0.90', changefreq: 'weekly' },
-    { url: '/#watermark', priority: '0.85', changefreq: 'weekly' },
-    { url: '/#crop', priority: '0.85', changefreq: 'weekly' },
-    { url: '/#protect', priority: '0.85', changefreq: 'weekly' },
-    { url: '/#jpg_to_pdf', priority: '0.90', changefreq: 'weekly' },
-    { url: '/#pdf_to_jpg', priority: '0.90', changefreq: 'weekly' },
-    { url: '/#ai_chat', priority: '0.90', changefreq: 'weekly' },
-    { url: '/#ai_summary', priority: '0.90', changefreq: 'weekly' },
-    { url: '/#ai_translate', priority: '0.90', changefreq: 'weekly' },
-    { url: '/#ai_extract', priority: '0.90', changefreq: 'weekly' },
-    { url: '/#ai_audit', priority: '0.90', changefreq: 'weekly' },
-  ];
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages
-  .map(
-    (p) => `  <url>
-    <loc>${baseUrl}${p.url}</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>${p.changefreq}</changefreq>
-    <priority>${p.priority}</priority>
-  </url>`
-  )
-  .join('\n')}
-</urlset>`;
+  try {
+    const rootSitemap = path.join(process.cwd(), 'sitemap.xml');
+    const publicSitemap = path.join(process.cwd(), 'public', 'sitemap.xml');
+    const filePath = fs.existsSync(rootSitemap) ? rootSitemap : publicSitemap;
+    
+    let xml = fs.readFileSync(filePath, 'utf-8');
+    // Dynamically replace default deployment host with active host if different
+    xml = xml.replace(/https:\/\/ais-pre-jif4roijm7su7cij4cqj4x-821735053734\.asia-southeast1\.run\.app/g, baseUrl);
 
-  res.type('application/xml');
-  res.send(xml);
+    res.type('application/xml; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+    return res.send(xml);
+  } catch (err) {
+    console.error('Error serving sitemap.xml:', err);
+    res.status(500).type('text/plain').send('Error loading sitemap');
+  }
 });
 
 // 1. AI Ask PDF / Chat

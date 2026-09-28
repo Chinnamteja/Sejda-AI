@@ -77,11 +77,19 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between h-16 w-full">
           {/* Logo & All Tools dropdown */}
           <div className="flex items-center space-x-4 sm:space-x-6">
-            <button
+            <a
               id="header-logo-btn"
-              onClick={() => onSelectTool('home')}
-              className="flex items-center space-x-2.5 text-left group focus:outline-hidden cursor-pointer"
-              title="Sejda Home"
+              href="/"
+              rel="home"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('home');
+                }
+              }}
+              className="logo site-logo flex items-center space-x-2.5 text-left group focus:outline-hidden cursor-pointer"
+              title="Sejda: Free Online PDF Editor &amp; Tools"
+              aria-label="Sejda Homepage"
             >
               {/* Sejda Icon */}
               <div className="w-8 h-8 rounded-lg bg-[#18a474] flex items-center justify-center shadow-xs text-white group-hover:bg-[#159167] transition-all">
@@ -93,14 +101,14 @@ export const Header: React.FC<HeaderProps> = ({
                 </svg>
               </div>
               <div className="flex items-baseline">
-                <span className="text-2xl font-extrabold tracking-tight text-[#18a474]">
+                <span className="site-title text-2xl font-extrabold tracking-tight text-[#18a474]">
                   sejda
                 </span>
-                <span className="ml-1.5 px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-emerald-50 text-[#18a474] rounded-md border border-emerald-200/80">
+                <span className="logo-badge ml-1.5 px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-emerald-50 text-[#18a474] rounded-md border border-emerald-200/80">
                   AI
                 </span>
               </div>
-            </button>
+            </a>
 
             {/* "All Tools" Mega Menu Trigger */}
             <div className="relative" ref={dropdownRef}>
