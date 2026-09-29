@@ -24,6 +24,7 @@ import { SitemapPage } from './components/SitemapPage';
 import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
 import { GuidesHubPage } from './components/GuidesHubPage';
+import { FaqPage } from './components/FaqPage';
 import { HomeContentDepth } from './components/HomeContentDepth';
 import { CommandPalette } from './components/CommandPalette';
 import { OfflineIndicator } from './components/OfflineIndicator';
@@ -76,6 +77,9 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === 'guides' || hash === 'knowledge' || hash === 'articles') {
         setActiveTool('guides');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === 'faq' || hash === 'faqs' || hash.startsWith('faq-')) {
+        setActiveTool('faq');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
@@ -138,7 +142,8 @@ export default function App() {
         toolId === 'sitemap' ||
         toolId === 'about' ||
         toolId === 'contact' ||
-        toolId === 'guides'
+        toolId === 'guides' ||
+        toolId === 'faq'
       ) {
         window.location.hash = toolId;
       }
@@ -470,6 +475,15 @@ export default function App() {
           <GuidesHubPage
             onBackToHome={handleBackToHome}
             onSelectTool={handleSelectTool}
+          />
+        );
+
+      case 'faq':
+        return (
+          <FaqPage
+            onBackToHome={handleBackToHome}
+            onSelectTool={handleSelectTool}
+            onOpenPricing={() => setIsPricingModalOpen(true)}
           />
         );
 

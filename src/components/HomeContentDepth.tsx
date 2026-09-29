@@ -348,6 +348,17 @@ export const HomeContentDepth: React.FC<HomeContentDepthProps> = ({
             );
           })}
         </div>
+
+        <div className="text-center pt-2">
+          <button
+            type="button"
+            onClick={() => onSelectTool('faq')}
+            className="inline-flex items-center space-x-2 px-5 py-2.5 bg-white hover:bg-emerald-50 text-slate-700 hover:text-[#18a474] border border-slate-300 hover:border-emerald-300 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
+          >
+            <HelpCircle className="w-4 h-4 text-[#18a474]" />
+            <span>View Dedicated FAQ &amp; Help Center (All 16+ Topics) &rarr;</span>
+          </button>
+        </div>
       </section>
 
       {/* 5. AUTHORITATIVE KNOWLEDGE BASE & GUIDES (28 IN-DEPTH ARTICLES) */}

@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Extract Images from PDF to JPG and PNG - Sejda PDF</title>
-  >
+  <meta name="description" content="Complete guide to converting PDF pages into crisp JPG and PNG image files. Covers DPI benchmarks, CMYK to sRGB color matrices, and batch extraction.">
   <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/pdf-to-jpg-image-extraction-guide.html">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta property="og:title" content="PDF to JPG & PNG Conversion: Rasterization Resolution, DPI Settings & Color Profiles">
@@ -148,7 +148,97 @@
         <li>Click <strong>Convert to JPG</strong> and download your individual page images or bundled ZIP archive.</li>
       </ol>
 
-      <div class="cta-box">
+      
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 28px 0;">
+        <div style="font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Raw Embedded Image Stream Extraction vs Full-Page Rasterization</div>
+        <svg viewBox="0 0 760 160" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="font-family: system-ui, sans-serif;">
+          <rect x="10" y="20" width="160" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="90" y="50" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Input PDF Page</text>
+          <text x="90" y="75" font-size="11" fill="#64748b" text-anchor="middle">Embedded 4000x3000 Photo</text>
+          <text x="90" y="95" font-size="11" fill="#64748b" text-anchor="middle">Surrounding Text Columns</text>
+          <text x="90" y="115" font-size="11" fill="#3b82f6" text-anchor="middle">Vector Logos &amp; Icons</text>
+
+          <path d="M 175 80 L 215 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="220" y="20" width="240" height="120" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+          <text x="340" y="48" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">Sejda Extraction Pipeline</text>
+          <text x="340" y="72" font-size="11" fill="#334155" text-anchor="middle">• Mode A: Direct /XObject Stream Carving</text>
+          <text x="340" y="92" font-size="11" fill="#334155" text-anchor="middle">• Mode B: High-Res 300 DPI Cairo Render</text>
+          <text x="340" y="112" font-size="11" fill="#334155" text-anchor="middle">• Color Profile Gamma Correction</text>
+
+          <path d="M 465 80 L 505 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="510" y="20" width="240" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="630" y="50" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Exported Assets</text>
+          <text x="630" y="75" font-size="11" fill="#16a34a" text-anchor="middle">Original Camera Resolution</text>
+          <text x="630" y="95" font-size="11" fill="#64748b" text-anchor="middle">Zero Generational Blurring</text>
+          <text x="630" y="115" font-size="11" fill="#64748b" text-anchor="middle">Individual JPEGs + Page Renders</text>
+        </svg>
+      </div>
+      <h2>The Crucial Difference: Extracting Embedded Photos vs Converting Whole Pages</h2>
+      <p>
+        When users state they want to "convert PDF to JPEG", they typically mean one of two completely distinct operations:
+      </p>
+      <ul>
+        <li><strong>Mode 1: Full-Page Rasterization:</strong> Takes the entire document page (including text, tables, margins, and logos) and renders it as a unified JPEG image canvas. This is ideal for generating website thumbnail previews or uploading slide presentations to social media.</li>
+        <li><strong>Mode 2: Embedded Image Extraction (Stream Carving):</strong> Ignores the white page margins and text paragraphs, diving directly into the PDF's internal <code>/Resources /XObject</code> dictionary to extract the raw photographic images at their native camera sensor resolution (often 12 or 24 megapixels) without generational loss.</li>
+      </ul>
+      <p>
+        If you attempt to perform Mode 2 using a screenshot or standard page rasterizer, you downsample a gorgeous 4000x3000 professional product photograph to the resolution of your computer monitor, introducing severe pixelation. 
+        Sejda offers both modes with single-click precision.
+      </p>
+
+      <h2>Comparison: Image Extraction Methods &amp; Resolution Fidelity</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Extraction Strategy</th>
+            <th>Output Resolution</th>
+            <th>File Compression Quality</th>
+            <th>Best Production Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Raw /XObject Stream Carving</strong></td>
+            <td>Native embedded resolution (Up to 6000x4000)</td>
+            <td>100% Lossless (Copies original DCT/Flate bytes)</td>
+            <td>Extracting product photos, forensic crime scene evidence</td>
+          </tr>
+          <tr>
+            <td><strong>High-Res Cairo Page Raster (300 DPI)</strong></td>
+            <td>2550 x 3300 pixels (for standard Letter size)</td>
+            <td>High-quality JPEG Q=92</td>
+            <td>Commercial print proofing, catalog previews</td>
+          </tr>
+          <tr>
+            <td><strong>Web-Optimized Page Raster (72/144 DPI)</strong></td>
+            <td>612 x 792 pixels</td>
+            <td>Optimized WebP / JPEG Q=80</td>
+            <td>E-commerce thumbnails, mobile gallery view</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Extracting Images via Command Line Tools</h2>
+      <p>
+        Engineers can script automated extraction using the open-source Poppler <code>pdfimages</code> utility:
+      </p>
+      <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px 20px; font-family: monospace; font-size: 13px; overflow-x: auto; line-height: 1.6; margin: 20px 0;">
+        <span style="color: #94a3b8;"># Extract all embedded photos in their native JPEG format (-j)</span><br/>
+        <span style="color: #38bdf8;">pdfimages</span> -j annual_marketing_brochure.pdf /extracted_photos/img<br/><br/>
+        <span style="color: #94a3b8;"># List image dimensions, color spaces, and compression formats inside the PDF</span><br/>
+        <span style="color: #38bdf8;">pdfimages</span> -list annual_marketing_brochure.pdf
+      </div>
+
+      <h2>Troubleshooting CMYK Inversion Artifacts</h2>
+      <p>
+        When extracting photos from prepress print catalogs, extracted JPEG files sometimes open with neon inverted colors (e.g. skin tones looking bright cyan!). 
+        This occurs because high-end print brochures store images in the 4-channel CMYK color space. 
+        Standard consumer image viewers (such as Windows Photos or web browsers) assume all JPEGs are 3-channel sRGB and misinterpret the Cyan channel as Red. 
+        Sejda automatically detects CMYK streams and applies accurate ICC color space conversion to sRGB, ensuring extracted photos look natural on every screen.
+      </p>
+    <div class="cta-box">
         <h3>Extract Crisp Images from Your PDF</h3>
         <p>Convert pages to high-resolution JPEG or PNG images in seconds with zero data retention.</p>
         <a href="/#pdf_to_jpg">Launch PDF to JPG Converter &rarr;</a>

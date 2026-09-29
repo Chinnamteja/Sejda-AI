@@ -464,6 +464,23 @@ export const Header: React.FC<HeaderProps> = ({
                 About
               </a>
               <a
+                id="nav-faq-btn"
+                href="/faq.html"
+                onClick={(e) => {
+                  if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    onSelectTool('faq');
+                  }
+                }}
+                className={`px-2.5 py-1.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                  currentTool === 'faq'
+                    ? 'text-[#18a474] bg-emerald-50 font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+                }`}
+              >
+                FAQ
+              </a>
+              <a
                 id="nav-contact-btn"
                 href="/contact.html"
                 onClick={(e) => {
@@ -509,14 +526,6 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <PWAInstallButton onOpenDesktopModal={onShowDesktopInfo} />
-
-            <button
-              id="header-account-btn"
-              onClick={onOpenPricingModal}
-              className="hidden sm:inline-flex text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 rounded-lg border border-slate-200/60 transition cursor-pointer whitespace-nowrap shadow-2xs"
-            >
-              Free Account (3 tasks/hr)
-            </button>
 
             {/* Mobile Menu Button (Accessible on Mobile & Tablet) */}
             <button
@@ -628,6 +637,19 @@ export const Header: React.FC<HeaderProps> = ({
               className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700"
             >
               <span>About Us</span>
+            </a>
+            <a
+              href="/faq.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('faq');
+                  setMobileMenuOpen(false);
+                }
+              }}
+              className="p-2.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-[#18a474] flex items-center space-x-2 text-slate-700 font-semibold"
+            >
+              <span>FAQ</span>
             </a>
             <a
               href="/contact.html"

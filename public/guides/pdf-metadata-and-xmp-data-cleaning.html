@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google; connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com; media-src 'self' data: blob:; object-src 'none'; base-uri 'self';">
   <title>PDF Metadata and XMP Privacy Data Cleaning - Sejda</title>
-  >
+  <meta name="description" content="Learn how to detect, view, and purge hidden PDF metadata, author names, GPS geolocation coordinates, software build numbers, and editing revision timestamps.">
   <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/pdf-metadata-and-xmp-data-cleaning.html">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta property="og:title" content="How to Sanitize and Clean Hidden PDF Metadata (XMP & Info Dictionary)">
@@ -178,7 +178,101 @@ $ sejda-console set-metadata -f input.pdf     --author "" --creator "" --produce
       </p>
     
 
-      <div class="cta-box">
+      
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 28px 0;">
+        <div style="font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Dual-Layer Metadata Excision: Classical /Info vs Extensible XMP XML</div>
+        <svg viewBox="0 0 760 160" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="font-family: system-ui, sans-serif;">
+          <rect x="10" y="20" width="160" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="90" y="50" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Corporate Draft PDF</text>
+          <text x="90" y="75" font-size="11" fill="#ef4444" text-anchor="middle">Author: "john.doe@corp"</text>
+          <text x="90" y="95" font-size="11" fill="#ef4444" text-anchor="middle">Path: "C:SecretM&amp;A"</text>
+          <text x="90" y="115" font-size="11" fill="#ef4444" text-anchor="middle">Printer: Canon_IR_Office</text>
+
+          <path d="M 175 80 L 215 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="220" y="20" width="240" height="120" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+          <text x="340" y="48" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">Sejda Forensic Deep Clean</text>
+          <text x="340" y="72" font-size="11" fill="#334155" text-anchor="middle">• Excises Trailer /Info Dictionary</text>
+          <text x="340" y="92" font-size="11" fill="#334155" text-anchor="middle">• Purges XML RDF /Metadata Packet</text>
+          <text x="340" y="112" font-size="11" fill="#334155" text-anchor="middle">• Strips Document UUID &amp; PieceInfo</text>
+
+          <path d="M 465 80 L 505 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="510" y="20" width="240" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="630" y="50" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Sanitized Public PDF</text>
+          <text x="630" y="75" font-size="11" fill="#16a34a" text-anchor="middle">Zero Forensic Fingerprints</text>
+          <text x="630" y="95" font-size="11" fill="#64748b" text-anchor="middle">Compliant with Court ESI Rules</text>
+          <text x="630" y="115" font-size="11" fill="#64748b" text-anchor="middle">Protected Against Competitive Intel</text>
+        </svg>
+      </div>
+      <h2>The Hidden Dangers of PDF Metadata in Competitive &amp; Legal Scenarios</h2>
+      <p>
+        Every time a document is authored in Microsoft Word, Google Docs, or Adobe InDesign and exported to PDF, rich historical forensic markers are embedded deep within the file. 
+        These markers are invisible during ordinary reading, but easily accessed using free utilities like <code>pdfinfo</code> or ExifTool.
+      </p>
+      <p>
+        Real-world forensic data frequently extracted by investigative journalists and opposing litigators includes:
+      </p>
+      <ul>
+        <li><strong>Internal File Paths &amp; Username Directory Structures:</strong> Exports like <code>/Users/sarah_director/Projects/Project_Falcon_Layoffs/Severance_Matrix.docx</code> disclose internal project codenames and operating system directory hierarchies.</li>
+        <li><strong>Software Licenses &amp; Computer Hostnames:</strong> Embedded Adobe XMP packets contain machine MAC addresses, Adobe Creative Cloud user IDs, and exact software build numbers.</li>
+        <li><strong>Hidden Revision Increments &amp; Timestamps:</strong> Forensic timelines expose whether an alleged "original agreement" was actually hastily fabricated the night before discovery submission.</li>
+      </ul>
+
+      <h2>Comparison: Document /Info Dictionary vs Extensible Metadata Platform (XMP)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Metadata Schema</th>
+            <th>Storage Location in PDF</th>
+            <th>Typical Data Contained</th>
+            <th>Cleaning Complexity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Classical /Info Dictionary</strong></td>
+            <td>Referenced directly in document Trailer</td>
+            <td>Title, Author, Subject, Creator, Producer, CreationDate, ModDate</td>
+            <td>Low; simple dictionary overwrite in XRef table</td>
+          </tr>
+          <tr>
+            <td><strong>XMP Extensible Metadata Platform</strong></td>
+            <td>XML stream embedded in Catalog <code>/Metadata</code> object</td>
+            <td>Dublin Core, Photoshop edit history, printer ICC profiles, camera EXIF</td>
+            <td>High; requires XML parsing and binary stream excision</td>
+          </tr>
+          <tr>
+            <td><strong>PieceInfo &amp; Private Application Dictionaries</strong></td>
+            <td>Page and Document level private dictionaries</td>
+            <td>Adobe Illustrator vector artboards, QuarkXPress edit states</td>
+            <td>Medium; requires recursive tree pruning across all pages</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Automated Metadata Inspection &amp; Stripping via Terminal</h2>
+      <p>
+        Security teams can audit metadata exposure using command line tools before approving public releases:
+      </p>
+      <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px 20px; font-family: monospace; font-size: 13px; overflow-x: auto; line-height: 1.6; margin: 20px 0;">
+        <span style="color: #94a3b8;"># Step 1: Audit hidden metadata exposure with ExifTool</span><br/>
+        <span style="color: #38bdf8;">exiftool</span> -all executive_briefing.pdf<br/><br/>
+        <span style="color: #94a3b8;"># Step 2: Strip all metadata and XML packets with Sejda CLI</span><br/>
+        <span style="color: #38bdf8;">sejda-console</span> set-pdf-metadata \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--files executive_briefing.pdf \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--clear-all \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--strip-xmp \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--output sanitized_briefing.pdf
+      </div>
+
+      <h2>Preserving Mandatory Regulatory Metadata (PDF/A &amp; DOI Standards)</h2>
+      <p>
+        While stripping metadata is crucial for privacy, certain academic and legal standards require specific metadata tags to remain valid. 
+        For example, academic journal submissions require a Digital Object Identifier (DOI), and PDF/A files require the <code>pdfaExtension:schemas</code> XML block to prove ISO conformance. 
+        Sejda's metadata management tool allows granular surgical control: you can wipe author names, revision dates, and printer details while selectively preserving required compliance tags.
+      </p>
+    <div class="cta-box">
         <h3>Execute this task in your browser with zero install</h3>
         <p>Sejda processes documents in volatile RAM with guaranteed automated 2-hour file purge. Completely confidential and free for up to 3 tasks per hour.</p>
         <a href="/#protect">Open PDF Security & Metadata Tool Now &rarr;</a>

@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How to Rotate and Reorder PDF Pages Easily - Sejda</title>
-  >>
+  <meta name="description" content="Learn how to fix upside-down and sideways PDF pages permanently, reorder multi-page documents, and understand Rotate parameter flags in PDF page trees.">
   <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/how-to-rotate-and-reorder-pdf-pages.html">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta property="og:title" content="How to Rotate & Reorder PDF Pages: Permanent Orientation Fixes & Visual Page Grids">
@@ -178,7 +178,105 @@
         Sejda dynamically traverses the <code>/Outlines</code> dictionary and recalculates indirect object destinations (<code>/Dest</code>), ensuring that table of contents references accurately jump to their target chapters after rearrangement.
       </p>
     
-      <div class="cta-box">
+      
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 28px 0;">
+        <div style="font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Coordinate Transformation Matrix (/Rotate) vs Raster Re-encoding</div>
+        <svg viewBox="0 0 760 160" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="font-family: system-ui, sans-serif;">
+          <rect x="10" y="20" width="160" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="90" y="55" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Sideways Scan</text>
+          <text x="90" y="80" font-size="11" fill="#ef4444" text-anchor="middle">Landscape in Portrait Box</text>
+          <text x="90" y="100" font-size="11" fill="#64748b" text-anchor="middle">Page Dictionary: /Rotate 0</text>
+          <text x="90" y="120" font-size="11" fill="#64748b" text-anchor="middle">MediaBox: [0 0 595 842]</text>
+
+          <path d="M 175 80 L 215 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="220" y="20" width="240" height="120" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+          <text x="340" y="48" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">Sejda Zero-Loss Metadata Update</text>
+          <text x="340" y="72" font-size="11" fill="#334155" text-anchor="middle">• Updates /Rotate 90/180/270 Key</text>
+          <text x="340" y="92" font-size="11" fill="#334155" text-anchor="middle">• No Lossy JPEG Recompression</text>
+          <text x="340" y="112" font-size="11" fill="#334155" text-anchor="middle">• Zero Generation Artifacts</text>
+
+          <path d="M 465 80 L 505 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="510" y="20" width="240" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="630" y="50" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Properly Oriented PDF</text>
+          <text x="630" y="75" font-size="11" fill="#16a34a" text-anchor="middle">Instant 1-Millisecond Save</text>
+          <text x="630" y="95" font-size="11" fill="#64748b" text-anchor="middle">Text OCR Reading Flow Fixed</text>
+          <text x="630" y="115" font-size="11" fill="#64748b" text-anchor="middle">Printer Duplex Perfectly Aligned</text>
+        </svg>
+      </div>
+      <h2>Why Page Rotation in PDF Must Be Lossless: The /Rotate Matrix</h2>
+      <p>
+        In digital imaging, rotating an ordinary JPEG or PNG image requires decompressing pixel arrays into memory, applying a coordinate rotational matrix, and re-encoding the image stream back to disk. 
+        Because JPEG uses lossy discrete cosine transform (DCT) quantization, rotating an image repeatedly causes generational degradation—fuzzy lettering, chromatic abberations, and increased file weight.
+      </p>
+      <p>
+        In a well-engineered PDF document, however, page orientation is governed by an integer metadata key in the page dictionary: <code>/Rotate</code>. 
+        Valid values under ISO 32000 are multiples of 90 degrees: <code>0</code>, <code>90</code>, <code>180</code>, and <code>270</code>. 
+        When you rotate pages using Sejda, the underlying binary pixels, vector curves, and font programs are never touched. 
+        Only the <code>/Rotate</code> integer is incremented. 
+        This means operations are 100% instantaneous, perfectly lossless, and preserve every byte of visual resolution.
+      </p>
+
+      <h2>Comparing Page Geometry Dictionaries in ISO 32000</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>PDF Geometry Box</th>
+            <th>Primary Technical Purpose</th>
+            <th>Impact on Display &amp; Rotation</th>
+            <th>Production Print Standard</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>/MediaBox</strong></td>
+            <td>Specifies overall physical boundaries of display medium</td>
+            <td>Defines maximum visible canvas for reader software</td>
+            <td>Standard ISO paper sizes (A4, US Letter, Tabloid)</td>
+          </tr>
+          <tr>
+            <td><strong>/CropBox</strong></td>
+            <td>Defines page contents displayed or printed in Acrobat</td>
+            <td>Defaults to MediaBox; overrides visible viewport if smaller</td>
+            <td>Trims excess white scanning borders</td>
+          </tr>
+          <tr>
+            <td><strong>/BleedBox</strong></td>
+            <td>Defines production clipping region with bleed area</td>
+            <td>Essential for professional sheet printing past cut edges</td>
+            <td>Commercial offset printing (typically +3mm margin)</td>
+          </tr>
+          <tr>
+            <td><strong>/TrimBox</strong></td>
+            <td>Defines final intended dimensions after commercial cutting</td>
+            <td>Ignored by casual readers; critical for print prepress</td>
+            <td>Finished book, brochure, or magazine size</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Automating OCR Directional Heuristics</h2>
+      <p>
+        When processing batches of historical archives scanned on flatbed scanners, pages are frequently upside-down or sideways depending on how the clerk loaded the feeder. 
+        Sejda combines automated optical character recognition (OCR) orientation detectors:
+      </p>
+      <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px 20px; font-family: monospace; font-size: 13px; overflow-x: auto; line-height: 1.6; margin: 20px 0;">
+        <span style="color: #94a3b8;"># CLI batch auto-rotation using Tesseract text line orientation detection (OSD)</span><br/>
+        <span style="color: #38bdf8;">sejda-console</span> auto-rotate \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--files /scans/incoming_invoices/ \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--confidence-threshold 80 \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--output-dir /scans/corrected_orientation/<br/><br/>
+        <span style="color: #94a3b8;"># Detects text baseline angles (0°, 90°, 180°, 270°) and sets /Rotate automatically</span>
+      </div>
+
+      <h2>Troubleshooting Sticky Viewer Rotation vs Permanent Page Rotation</h2>
+      <p>
+        A frequent frustration occurs when an operator rotates a PDF inside a web browser or default PDF viewer, saves the file, and later opens it only to find the pages have reverted to their original sideways orientation! 
+        This happens because standard viewer "Rotate View" options (Ctrl+Shift+Plus) merely change the local display viewport for that active session without writing to the PDF file's <code>/Rotate</code> dictionary key on disk. 
+        Using Sejda writes permanent cross-reference updates to disk so the page renders identically across mobile devices, desktop viewers, and print hardware.
+      </p>
+    <div class="cta-box">
         <h3>Fix Crooked &amp; Disordered Pages</h3>
         <p>Permanently rotate and reorder your PDF pages in seconds for free.</p>
         <a href="/#rotate">Rotate PDF Pages Now &rarr;</a>

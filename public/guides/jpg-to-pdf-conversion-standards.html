@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JPG to PDF Conversion Standards & DPI Guide - Sejda</title>
-  >>
+  <meta name="description" content="Technical guide to converting camera snapshots, receipts, and scans into standardized, printable ISO 32000 PDF documents with custom margins and page sizes.">
   <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/jpg-to-pdf-conversion-standards.html">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta property="og:title" content="JPG to PDF Conversion Standards: Aspect Ratio, Page Margins & ISO PDF Compliance">
@@ -200,7 +200,104 @@
         <li><strong>Original Image Dimensions:</strong> Configures the PDF <code>/MediaBox</code> coordinates to match the image's native pixel aspect ratio precisely.</li>
       </ul>
     
-      <div class="cta-box">
+      
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 28px 0;">
+        <div style="font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Lossless JPEG Stream Ingestion: DCTDecode Direct Injection</div>
+        <svg viewBox="0 0 760 160" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="font-family: system-ui, sans-serif;">
+          <rect x="10" y="20" width="160" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="90" y="50" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Input JPEG Images</text>
+          <text x="90" y="75" font-size="11" fill="#64748b" text-anchor="middle">Receipt.jpg (2.1 MB)</text>
+          <text x="90" y="95" font-size="11" fill="#64748b" text-anchor="middle">Passport.jpg (3.4 MB)</text>
+          <text x="90" y="115" font-size="11" fill="#3b82f6" text-anchor="middle">Pre-compressed DCT</text>
+
+          <path d="M 175 80 L 215 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="220" y="20" width="240" height="120" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+          <text x="340" y="48" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">Sejda Zero-Loss Pipeline</text>
+          <text x="340" y="72" font-size="11" fill="#334155" text-anchor="middle">• Extracts Raw DCT Huffman Stream</text>
+          <text x="340" y="92" font-size="11" fill="#334155" text-anchor="middle">• Wraps in PDF /XObject /Image Dictionary</text>
+          <text x="340" y="112" font-size="11" fill="#334155" text-anchor="middle">• Calibrates Page MediaBox to EXIF Aspect</text>
+
+          <path d="M 465 80 L 505 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="510" y="20" width="240" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="630" y="50" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Assembled Master PDF</text>
+          <text x="630" y="75" font-size="11" fill="#16a34a" text-anchor="middle">Zero Generational Artifacts</text>
+          <text x="630" y="95" font-size="11" fill="#64748b" text-anchor="middle">Identical File Size Sum</text>
+          <text x="630" y="115" font-size="11" fill="#64748b" text-anchor="middle">Standardized Printable Geometry</text>
+        </svg>
+      </div>
+      <h2>The Engineering Behind Lossless Image Wrapping vs Re-Encoding</h2>
+      <p>
+        Converting high-resolution JPEG, PNG, or TIFF scans into a consolidated PDF portfolio is a daily task in accounting, legal discovery, and real estate transactions. 
+        However, substandard conversion tools perform a destructive round-trip re-encoding: they decompress the JPEG pixel array, convert it to an uncompressed bitmap canvas in memory, and re-compress it using a generic JPEG encoder. 
+        Because JPEG uses lossy discrete cosine transform (DCT) quantization, this double-compression introduces muddy compression artifacts around fine text, blurs serial numbers on receipts, and unnecessarily balloons file size.
+      </p>
+      <p>
+        In contrast, Sejda utilizes <strong>Passthrough Stream Ingestion</strong>. 
+        The PDF specification natively supports the <code>/DCTDecode</code> filter, which matches standard baseline JPEG compression. 
+        Sejda reads the JPEG byte stream directly from disk, wraps it in a standard PDF <code>/XObject</code> image dictionary, sets the exact pixel width and height in the dictionary header, and writes the stream to disk without re-compressing a single pixel. 
+        The conversion is instantaneous, 100% mathematically lossless, and preserves every nuance of photographic fidelity.
+      </p>
+
+      <h2>Comparison: Image Format Suitability for PDF Document Packaging</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Raster Format</th>
+            <th>PDF Native Filter</th>
+            <th>Compression Type</th>
+            <th>Optimal Document Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>JPEG (JFIF)</strong></td>
+            <td><code>/DCTDecode</code></td>
+            <td>Lossy Frequency Domain</td>
+            <td>Photographs, ID cards, color receipts, real estate listings</td>
+          </tr>
+          <tr>
+            <td><strong>PNG (Flate)</strong></td>
+            <td><code>/FlateDecode</code></td>
+            <td>Lossless Deflate (LZ77 + Huffman)</td>
+            <td>Logos, diagrams, screenshots, graphs with sharp text</td>
+          </tr>
+          <tr>
+            <td><strong>TIFF (CCITT G4)</strong></td>
+            <td><code>/CCITTFaxDecode</code></td>
+            <td>Lossless 1-bit 2D Run-Length</td>
+            <td>High-speed legal production &amp; court evidence scans</td>
+          </tr>
+          <tr>
+            <td><strong>JPEG 2000 (JP2)</strong></td>
+            <td><code>/JPXDecode</code></td>
+            <td>Wavelet Transform (Lossless / Lossy)</td>
+            <td>Medical radiology scans, satellite imagery, fine art reproduction</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Automated Multi-Image Assembly via Command Line</h2>
+      <p>
+        For enterprise batch operations processing thousands of expense receipts or insurance damage photographs:
+      </p>
+      <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px 20px; font-family: monospace; font-size: 13px; overflow-x: auto; line-height: 1.6; margin: 20px 0;">
+        <span style="color: #94a3b8;"># CLI batch assembly: Merge 150 JPEG receipt photos into unified PDF portfolio</span><br/>
+        <span style="color: #38bdf8;">img2pdf</span> receipts/*.jpg -o unified_expense_report.pdf \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--pagesize A4 \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--border 10mm:10mm \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--fit shrink<br/><br/>
+        <span style="color: #94a3b8;"># Result: Lossless passthrough wrapping with uniform 10mm print margins</span>
+      </div>
+
+      <h2>Troubleshooting EXIF Orientation Inconsistencies</h2>
+      <p>
+        Modern smartphones embed an EXIF metadata tag (Orientation 1 through 8) indicating whether a photo was shot in portrait or landscape mode, but raw JPEG pixels are often stored sideways on the sensor. 
+        Basic converters ignore EXIF tags, resulting in upside-down or sideways pages in the resulting PDF. 
+        Sejda's ingestion pipeline reads the EXIF orientation matrix and automatically injects matching <code>/Rotate</code> dictionary keys, ensuring every receipt and ID card is right-side up without requiring lossy re-encoding.
+      </p>
+    <div class="cta-box">
         <h3>Convert Your Scans &amp; Photos to PDF</h3>
         <p>Create clean, professional PDF documents from your pictures for free.</p>
         <a href="/#jpg_to_pdf">Start JPG to PDF Conversion &rarr;</a>

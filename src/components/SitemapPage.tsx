@@ -30,7 +30,8 @@ import {
   BookOpen,
   Copy,
   Check,
-  HardDrive
+  HardDrive,
+  HelpCircle
 } from 'lucide-react';
 import { ToolId } from '../types';
 import { ALL_GUIDES } from '../data/guidesData';
@@ -519,6 +520,22 @@ export const SitemapPage: React.FC<SitemapPageProps> = ({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <button
+                onClick={() => onSelectTool('faq')}
+                className="p-5 bg-white rounded-2xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition text-left cursor-pointer space-y-2 group"
+              >
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#18a474] flex items-center justify-center font-bold">
+                  <HelpCircle className="w-4 h-4" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 group-hover:text-[#18a474]">Frequently Asked Questions</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Common questions on 2-hour auto-purge, e-signatures, Gemini 3.8 AI, file limits, and offline apps.
+                </p>
+                <span className="inline-block text-[11px] font-bold text-[#18a474] pt-1">
+                  Browse FAQ &rarr;
+                </span>
+              </button>
+
               <button
                 onClick={() => onSelectTool('privacy')}
                 className="p-5 bg-white rounded-2xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition text-left cursor-pointer space-y-2 group"

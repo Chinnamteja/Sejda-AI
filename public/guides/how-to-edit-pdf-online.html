@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How to Edit PDF Files Online for Free - Sejda Editor</title>
-  >
+  <meta name="description" content="Learn the technical mechanics of PDF content stream editing, font matching, text reflow, and modifying existing PDF text online with Sejda.">
   <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/how-to-edit-pdf-online.html">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta property="og:title" content="How to Edit Existing PDF Text Directly in Your Browser Without Conversion">
@@ -173,7 +173,111 @@
         Because PDF lines do not automatically push down subsequent paragraphs when new words are added, avoid typing long sentences into narrow spaces. If you need to add extensive paragraphs, insert a new page or create space using Sejda's whiteout and margin adjustment tools.
       </p>
 
-      <div class="cta-box">
+      
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 28px 0;">
+        <div style="font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Vector Text Parsing &amp; In-Place Font Replacement Architecture</div>
+        <svg viewBox="0 0 760 160" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="font-family: system-ui, sans-serif;">
+          <rect x="10" y="20" width="160" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="90" y="55" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Input PDF Page</text>
+          <text x="90" y="80" font-size="11" fill="#64748b" text-anchor="middle">Decompressed Stream</text>
+          <text x="90" y="100" font-size="11" fill="#64748b" text-anchor="middle">BT /F1 12 Tf (Old) Tj</text>
+          <text x="90" y="120" font-size="11" fill="#3b82f6" text-anchor="middle">Font Metrics Table</text>
+
+          <path d="M 175 80 L 215 80" stroke="#18a474" stroke-width="2"/>
+          
+          <rect x="220" y="20" width="230" height="120" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+          <text x="335" y="50" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">Sejda Direct-Text Engine</text>
+          <text x="335" y="75" font-size="11" fill="#334155" text-anchor="middle">• Glyph Width &amp; Kerning Detection</text>
+          <text x="335" y="95" font-size="11" fill="#334155" text-anchor="middle">• Bounding Box Re-alignment</text>
+          <text x="335" y="115" font-size="11" fill="#334155" text-anchor="middle">• In-place Content Stream Rewrite</text>
+
+          <path d="M 455 80 L 495 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="500" y="20" width="230" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="615" y="50" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Pristine Output PDF</text>
+          <text x="615" y="75" font-size="11" fill="#16a34a" text-anchor="middle">Exact Font Match Retained</text>
+          <text x="615" y="95" font-size="11" fill="#64748b" text-anchor="middle">Zero Quality Loss / Blurriness</text>
+          <text x="615" y="115" font-size="11" fill="#64748b" text-anchor="middle">Searchable OCR Text Preserved</text>
+        </svg>
+      </div>
+      <h2>Direct Text Editing vs Flattened Whiteout: The Technical Difference</h2>
+      <p>
+        The vast majority of web-based "PDF editors" are actually raster overlay utilities. 
+        When you attempt to modify text in primitive tools, they simply draw an opaque white rectangle over the original sentence and place an HTML input field over the top. 
+        This introduces catastrophic flaws: search indexing tools like Google or Adobe Acrobat still extract the hidden old text underneath, screen readers for visually impaired users read both layers, and zooming reveals mismatching fonts and misaligned baselines.
+      </p>
+      <p>
+        In contrast, Sejda implements true low-level PDF stream surgery. 
+        When you click an existing paragraph, Sejda parses the <code>/Contents</code> dictionary, locates the specific text matrix operators (<code>Tm</code>, <code>Td</code>, <code>Tj</code>, and <code>TJ</code>), extracts the embedded font metrics, and adjusts the character spacing array dynamically. 
+        The original text string is replaced directly inside the byte stream, maintaining 100% vector scalability and document integrity.
+      </p>
+
+      <h2>Comparison: Native Stream Editing vs Layered Whiteout Tools</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Document Characteristic</th>
+            <th>Sejda Direct Stream Editing</th>
+            <th>Conventional Whiteout / Canvas Overlay</th>
+            <th>Legal &amp; Compliance Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Font Matching &amp; Kerning</td>
+            <td>Extracts embedded font program &amp; matches glyph widths</td>
+            <td>Approximates with generic system fallback font</td>
+            <td>Subtle typographic drift flags visual alteration</td>
+          </tr>
+          <tr>
+            <td>Full-Text Search Indexing</td>
+            <td>Old text excised; new text fully indexed in XRef</td>
+            <td>Old text remains hidden under opaque box</td>
+            <td>Discovery searches extract outdated or redacted terms</td>
+          </tr>
+          <tr>
+            <td>Screen Reader Accessibility</td>
+            <td>Maintains semantic Structure Tree and reading order</td>
+            <td>Disrupts flow; reads duplicate or phantom text</td>
+            <td>Violates ADA Title III &amp; Section 508 accessibility</td>
+          </tr>
+          <tr>
+            <td>Print &amp; Vector Scalability</td>
+            <td>Infinite resolution at 2400 DPI print output</td>
+            <td>Prone to blurry raster edges or pixelation</td>
+            <td>Unacceptable for professional publishing &amp; branding</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Under the Hood: PDF Text Operator Modification Example</h2>
+      <p>
+        To understand how PDF text is represented, consider this raw content stream snippet before and after an edit in Sejda:
+      </p>
+      <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px 20px; font-family: monospace; font-size: 13px; overflow-x: auto; line-height: 1.6; margin: 20px 0;">
+        <span style="color: #94a3b8;">% Original raw stream with price "$1,250.00"</span><br/>
+        BT<br/>
+        /F2 12.0 Tf<br/>
+        72.00 684.50 Td<br/>
+        ($1,250.00 USD) Tj<br/>
+        ET<br/><br/>
+        <span style="color: #94a3b8;">% Sejda rewritten stream with revised figure "$1,450.00" and adjusted kerning</span><br/>
+        BT<br/>
+        /F2 12.0 Tf<br/>
+        72.00 684.50 Td<br/>
+        [($1,) 20 (450.00) -15 ( USD)] TJ<br/>
+        ET
+      </div>
+
+      <h2>Troubleshooting Font Mismatch &amp; Missing Glyph Errors</h2>
+      <p>
+        When modifying legacy or proprietary PDFs, you may occasionally encounter fonts where specific glyphs cannot be typed. This stems from subsetted font embedding:
+      </p>
+      <ul>
+        <li><strong>Character Code Mapping (CMap) Deprivation:</strong> If the original author only typed letters "A, B, C", the creator software deliberately omitted glyph data for "X, Y, Z" to minimize file size. When you type "X", no glyph exists in the embedded font dictionary.</li>
+        <li><strong>Sejda's Intelligent Font Synthesis:</strong> When Sejda detects missing subset glyphs, it leverages its typographic library of over 1,500 open-source metrics-compatible fonts (e.g., Liberation Sans for Arial, Nimbus Roman for Times). It matches x-height, cap-height, stroke width, and serif geometry to produce seamless edits.</li>
+      </ul>
+    <div class="cta-box">
         <h3>Edit Your PDF in Seconds</h3>
         <p>No credit card required. Up to 3 free tasks per hour with bank-grade encryption and 2-hour auto-purge.</p>
         <a href="/#edit">Launch Sejda PDF Editor &rarr;</a>

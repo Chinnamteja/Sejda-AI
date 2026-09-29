@@ -104,6 +104,9 @@ app.get(['/cookies', '/cookies.html'], (req, res) => {
 app.get(['/sitemap', '/sitemap.html'], (req, res) => {
   res.sendFile(path.join(process.cwd(), 'public', 'sitemap.html'));
 });
+app.get(['/faq', '/faq.html'], (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'faq.html'));
+});
 app.use('/guides', express.static(path.join(process.cwd(), 'public', 'guides')));
 
 // Search Engine & AdSense Crawler directives (robots.txt)

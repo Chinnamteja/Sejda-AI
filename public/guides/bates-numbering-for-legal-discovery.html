@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bates Numbering for Legal Discovery and Courts - Sejda</title>
-  >>
+  <meta name="description" content="Guide to Bates numbering for litigation discovery and courtroom evidence bundles: alphanumeric prefixes, digit padding, margin placement, and court compliance.">
   <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/bates-numbering-for-legal-discovery.html">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta property="og:title" content="Bates Numbering for Legal Discovery: Formatting, Prefixing & Court Bundle Production">
@@ -195,7 +195,104 @@
         <li><strong>Preserve Extracted Text Layers:</strong> Ensure your numbering utility modifies document content streams without rasterizing pages, maintaining full searchability for opposing counsel and judicial review.</li>
       </ul>
     
-      <div class="cta-box">
+      
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 28px 0;">
+        <div style="font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Litigation Discovery: Sequential Bates Stamping &amp; Exhibit Production</div>
+        <svg viewBox="0 0 760 160" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="font-family: system-ui, sans-serif;">
+          <rect x="10" y="20" width="160" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="90" y="50" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Discovery Intake</text>
+          <text x="90" y="75" font-size="11" fill="#64748b" text-anchor="middle">10,000 Mixed PDFs</text>
+          <text x="90" y="95" font-size="11" fill="#64748b" text-anchor="middle">Emails, Contracts, Logs</text>
+          <text x="90" y="115" font-size="11" fill="#ef4444" text-anchor="middle">Unindexed Evidence</text>
+
+          <path d="M 175 80 L 215 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="220" y="20" width="240" height="120" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+          <text x="340" y="48" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">Sejda Bates Sequencer</text>
+          <text x="340" y="72" font-size="11" fill="#334155" text-anchor="middle">• Prefix: "PLAINTIFF-ACME-"</text>
+          <text x="340" y="92" font-size="11" fill="#334155" text-anchor="middle">• 6-Digit Zero-Padded Sequence</text>
+          <text x="340" y="112" font-size="11" fill="#334155" text-anchor="middle">• Margin Auto-Clearance &amp; Shrink</text>
+
+          <path d="M 465 80 L 505 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="510" y="20" width="240" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="630" y="50" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Trial Evidence Bundle</text>
+          <text x="630" y="75" font-size="11" fill="#16a34a" text-anchor="middle">PLAINTIFF-ACME-000001..010000</text>
+          <text x="630" y="95" font-size="11" fill="#64748b" text-anchor="middle">Court PACER / ECF Compliant</text>
+          <text x="630" y="115" font-size="11" fill="#64748b" text-anchor="middle">Unambiguous Oral Citations</text>
+        </svg>
+      </div>
+      <h2>The Legal History and Mandatory Role of Bates Numbering in Litigation</h2>
+      <p>
+        Named after Edwin G. Bates who patented the mechanical numbering machine in 1891, Bates numbering is the universally mandated method of indexing electronic discovery (ESI) in civil litigation, criminal proceedings, and government regulatory audits (including US SEC, FTC, and DOJ investigations).
+      </p>
+      <p>
+        In complex litigation involving hundreds of thousands of internal corporate emails, technical schematics, and financial spreadsheets, attorneys cannot simply cite "Page 4" in open court because different print drivers render page breaks differently. 
+        By stamping every single sheet of paper and electronic page with a unique, alphanumeric identifier (e.g. <code>DEFENDANT-004821</code>), counsel, judicial clerks, and the trial judge can reference the exact piece of evidence instantaneously during cross-examination without confusion.
+      </p>
+
+      <h2>Anatomy of a Court-Compliant Bates Number</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Standard Pattern</th>
+            <th>Forensic Purpose</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Party Prefix</strong></td>
+            <td>2 to 12 alphanumeric characters</td>
+            <td>Identifies producing entity and litigation role</td>
+            <td><code>PLTF-</code> (Plaintiff), <code>DEFT-</code> (Defendant)</td>
+          </tr>
+          <tr>
+            <td><strong>Numeric Counter</strong></td>
+            <td>5 to 8 digits with leading zeros</td>
+            <td>Ensures predictable sorting in discovery databases (Relativity)</td>
+            <td><code>000001</code> through <code>999999</code></td>
+          </tr>
+          <tr>
+            <td><strong>Confidentiality Suffix</strong></td>
+            <td>Optional protective order tag</td>
+            <td>Governs protective order handling and sealed court filings</td>
+            <td><code>-CONFIDENTIAL - ATTORNEYS EYES ONLY</code></td>
+          </tr>
+          <tr>
+            <td><strong>Page Placement</strong></td>
+            <td>Bottom-Right Margin (0.5 in)</td>
+            <td>Avoids obscuring text while remaining visible in binders</td>
+            <td>X: 520pt, Y: 25pt on standard US Letter</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Automated Bates Stamping via Sejda CLI</h2>
+      <p>
+        Litigation support departments frequently stamp large evidentiary document productions using automated command line routines:
+      </p>
+      <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px 20px; font-family: monospace; font-size: 13px; overflow-x: auto; line-height: 1.6; margin: 20px 0;">
+        <span style="color: #94a3b8;"># CLI batch Bates stamping for Federal Court Production</span><br/>
+        <span style="color: #38bdf8;">sejda-console</span> bates-number \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--files /discovery/unprocessed/*.pdf \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--prefix <span style="color: #a3e635;">"ACME-CORP-"</span> \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--number-of-digits 6 \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--start-number 1 \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--position bottom-right \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--shrink-page-contents-to-fit \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--output-dir /discovery/production_batch_1/<br/><br/>
+        <span style="color: #94a3b8;"># Stamps: ACME-CORP-000001, ACME-CORP-000002... shrinking margins to prevent text occlusion</span>
+      </div>
+
+      <h2>Troubleshooting Bates Stamp Occlusion with "Shrink to Fit"</h2>
+      <p>
+        A critical error in discovery production is stamping a Bates number directly over a vital contract clause or accountant signature line at the bottom of the page. 
+        Under federal civil procedure rules, obscuring evidence can lead to court sanctions. 
+        Sejda features automated <strong>Shrink to Fit</strong>: it scales down the existing page content stream by 4% to create an artificial white safety margin along the bottom border, ensuring the Bates number never occludes a single pixel of evidence.
+      </p>
+    <div class="cta-box">
         <h3>Stamp Your Court Exhibits in Seconds</h3>
         <p>Apply standardized Bates numbering across litigation files with Sejda.</p>
         <a href="/#watermark">Open Legal Stamping Tool &rarr;</a>

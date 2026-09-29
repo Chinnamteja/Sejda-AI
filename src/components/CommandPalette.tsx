@@ -140,6 +140,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       },
     },
     {
+      id: 'faq' as ToolId,
+      name: 'Frequently Asked Questions (FAQ)',
+      description: 'Answers on 2-hour auto-purge, e-signatures, Gemini 3.8 AI, and offline desktop apps.',
+      category: 'Support',
+      action: () => {
+        onSelectTool('faq');
+        onClose();
+      },
+    },
+    {
       id: 'contact' as ToolId,
       name: 'Contact Support & Helpdesk',
       description: '24-hour support desk, verified email, phone, and physical address.',

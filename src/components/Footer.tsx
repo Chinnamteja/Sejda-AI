@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { ShieldCheck, Lock, Sparkles, Heart } from 'lucide-react';
+import { ShieldCheck, Lock, Sparkles, Heart, Clock } from 'lucide-react';
 import { ToolId } from '../types';
 
 interface FooterProps {
@@ -319,6 +319,20 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
                   PDF to JPG
                 </a>
               </li>
+              <li>
+                <a
+                  href="/faq.html"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                      e.preventDefault();
+                      onSelectTool('faq');
+                    }
+                  }}
+                  className="hover:text-[#18a474] font-medium transition"
+                >
+                  FAQ &amp; Help Center
+                </a>
+              </li>
               <li className="pt-1">
                 <button
                   type="button"
@@ -339,13 +353,29 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <div className="flex items-center space-x-2">
-            <span className="font-bold text-[#18a474] text-base">sejda</span>
-            <span>© 2026 Sejda BV. All rights reserved.</span>
+        <div className="mt-12 pt-8 border-t border-slate-200 flex flex-col lg:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="flex items-center space-x-2">
+              <span className="font-bold text-[#18a474] text-base">sejda</span>
+              <span>© 2026 Sejda BV. All rights reserved.</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200/70 text-[11px] text-slate-600">
+              <span className="inline-flex items-center gap-1">
+                <Clock className="w-3 h-3 text-[#18a474]" />
+                <span>Last modified: <time dateTime="2026-09-28" className="font-medium text-slate-700">Sep 28, 2026</time></span>
+              </span>
+              <span className="text-slate-300">•</span>
+              <span className="text-slate-500">
+                Published: <time dateTime="2026-01-15">Jan 2026</time>
+              </span>
+              <span className="inline-flex items-center gap-1 font-medium text-emerald-700 ml-0.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                <span>Fresh</span>
+              </span>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-4 gap-y-1">
             <a
               href="/about.html"
               onClick={(e) => {
@@ -370,6 +400,19 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTool, onOpenLegal, onOpe
               className="hover:text-slate-800 cursor-pointer transition text-left"
             >
               Contact Us
+            </a>
+            <span>•</span>
+            <a
+              href="/faq.html"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                  e.preventDefault();
+                  onSelectTool('faq');
+                }
+              }}
+              className="text-[#18a474] font-semibold hover:underline cursor-pointer transition text-left"
+            >
+              FAQ
             </a>
             <span>•</span>
             <a

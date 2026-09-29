@@ -35,7 +35,8 @@ export type ToolId =
   | 'sitemap'
   | 'about'
   | 'contact'
-  | 'guides';
+  | 'guides'
+  | 'faq';
 
 export type ToolCategory =
   | 'popular'

@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redacting Sensitive Data in PDF Documents - Sejda</title>
-  >>
+  <meta name="description" content="Learn why drawing black boxes over PDF text fails redaction audits, how true cryptographic redaction purges underlying text objects, and how to protect sensitive data.">
   <link rel="canonical" href="https://ais-pre-jif4roijm7su7cij4cqj4x-821735053734.asia-southeast1.run.app/guides/redacting-sensitive-data-in-pdf.html">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta property="og:title" content="Redacting Sensitive Data in PDF: True Cryptographic Redaction vs Black Box Overlays">
@@ -208,7 +208,105 @@
         <li>Search for the redacted terms. If your redaction tool operated correctly, zero characters from the redacted region will appear in the plain text output.</li>
       </ul>
     
-      <div class="cta-box">
+      
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 28px 0;">
+        <div style="font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">True Vector Redaction vs Cosmetic Black Box Overlay</div>
+        <svg viewBox="0 0 760 160" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="font-family: system-ui, sans-serif;">
+          <rect x="10" y="20" width="160" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="90" y="50" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Sensitive Target</text>
+          <text x="90" y="75" font-size="11" fill="#ef4444" text-anchor="middle">SSN: 123-45-6789</text>
+          <text x="90" y="95" font-size="11" fill="#64748b" text-anchor="middle">Coordinates: [x, y, w, h]</text>
+          <text x="90" y="115" font-size="11" fill="#64748b" text-anchor="middle">Text Matrix &amp; Bitmap</text>
+
+          <path d="M 175 80 L 215 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="220" y="20" width="240" height="120" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+          <text x="340" y="48" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">Sejda Redaction Engine</text>
+          <text x="340" y="72" font-size="11" fill="#334155" text-anchor="middle">• Excises Text Operators from Stream</text>
+          <text x="340" y="92" font-size="11" fill="#334155" text-anchor="middle">• Crops Bitmap Pixels at Pixel Grid</text>
+          <text x="340" y="112" font-size="11" fill="#334155" text-anchor="middle">• Draws Opaque Vector Box Replacement</text>
+
+          <path d="M 465 80 L 505 80" stroke="#18a474" stroke-width="2"/>
+
+          <rect x="510" y="20" width="240" height="120" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="630" y="50" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Forensically Sterile PDF</text>
+          <text x="630" y="75" font-size="11" fill="#16a34a" text-anchor="middle">0% Recoverable via Hex Search</text>
+          <text x="630" y="95" font-size="11" fill="#64748b" text-anchor="middle">Copy-Paste Returns Nothing</text>
+          <text x="630" y="115" font-size="11" fill="#64748b" text-anchor="middle">Court Admissible Sanitization</text>
+        </svg>
+      </div>
+      <h2>The High-Profile Danger of "Fake Redactions" in Legal History</h2>
+      <p>
+        Legal history is replete with catastrophic data leak scandals caused by attorneys and government officials drawing superficial black highlight shapes over sensitive passages. 
+        In high-stakes federal litigations (including Department of Justice filings and high-profile patent disputes), recipients simply copied the entire page text into Notepad or opened the file in an ink editing app to reveal every unredacted name, undercover agent address, and proprietary financial trade secret hidden beneath the black box.
+      </p>
+      <p>
+        True legal redaction requires permanent stream excision. 
+        In the PDF specification, drawing a black rectangle is represented by vector drawing commands (<code>0 0 0 rg 72 650 200 20 re f</code>). 
+        If the preceding text operators (<code>BT ... (Sensitive Trade Secret) Tj ... ET</code>) remain in the stream, they continue to exist as selectable, indexable strings. 
+        Sejda's engine physically deletes the underlying character codes, resizes underlying raster image bitmaps to permanently erase blacked-out pixels, and updates the document cross-reference table.
+      </p>
+
+      <h2>Comparison: Permanent Structural Redaction vs Cosmetic Box Overlays</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Security &amp; Forensic Test</th>
+            <th>Sejda Permanent Redaction</th>
+            <th>Cosmetic Box (PDF Annotations)</th>
+            <th>Consequences of Failure</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ctrl+A &amp; Copy-Paste to Notepad</td>
+            <td>Zero text copied; stream is physically void</td>
+            <td>Full confidential text pasted cleanly</td>
+            <td>Immediate disclosure of confidential testimony</td>
+          </tr>
+          <tr>
+            <td>Binary Hex / Grep Search</td>
+            <td>Target strings completely absent from disk file</td>
+            <td>Strings clearly visible in plain ASCII / Unicode</td>
+            <td>Automated web scrapers extract secret data</td>
+          </tr>
+          <tr>
+            <td>Image Pixel Reconstruction</td>
+            <td>Underlying raster pixels permanently clipped to black</td>
+            <td>Pixels remain intact under semi-transparent box</td>
+            <td>Adjusting brightness/contrast reveals secret images</td>
+          </tr>
+          <tr>
+            <td>Screen Reader Accessibility (VoiceOver)</td>
+            <td>Reader encounters blank redaction marker</td>
+            <td>Reader vocally pronounces secret data to listeners</td>
+            <td>Severe HIPAA &amp; GDPR non-compliance fines</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Automated Redaction Patterns via Regular Expressions</h2>
+      <p>
+        For compliance departments processing thousands of medical intake forms or credit applications, manual highlighting is prone to human oversight. 
+        Sejda supports automated pattern-matching redactions:
+      </p>
+      <div style="background: #0f172a; color: #f8fafc; border-radius: 10px; padding: 18px 20px; font-family: monospace; font-size: 13px; overflow-x: auto; line-height: 1.6; margin: 20px 0;">
+        <span style="color: #94a3b8;"># CLI batch redaction targeting US Social Security Numbers and Credit Cards</span><br/>
+        <span style="color: #38bdf8;">sejda-console</span> redact \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--files /legal_production/unredacted/*.pdf \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--regex-pattern "\b\d{3}-\d{2}-\d{4}\b" \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--replacement-label "[REDACTED - SSN]" \<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;--output-dir /legal_production/sanitized/<br/><br/>
+        <span style="color: #94a3b8;"># Output result: Every SSN is surgically removed and replaced with a compliant black badge</span>
+      </div>
+
+      <h2>Troubleshooting Optical Kerning Leaks and Word Bounding Overlap</h2>
+      <p>
+        In proportional fonts like Times New Roman or Garamond, character glyphs often overlap slightly due to kerning pairs (e.g. "To", "Wa", "f-i"). 
+        When redacting a single word in a sentence, an imprecise bounding box calculation can leave the ascender of an "f" or the tail of a "y" protruding outside the redaction box, allowing forensic handwriting analysts to deduce letters. 
+        Sejda automatically adds an anti-aliased 1.5-point bounding box padding buffer around every detected glyph to prevent visual bleed-through.
+      </p>
+    <div class="cta-box">
         <h3>Permanently Redact Your PDF Files</h3>
         <p>Safely sanitize confidential data with bank-grade permanent redaction.</p>
         <a href="/#protect">Open Sejda Redaction Tool &rarr;</a>
