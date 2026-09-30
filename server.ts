@@ -17,17 +17,10 @@ const PORT = 3000;
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Ensure iframe compatibility, crawler access, and robust Content Security Policy (CSP)
+// Ensure universal iframe compatibility across Google AdSense Auto Ads site preview, AI Studio, and web embeds
 app.use((req, res, next) => {
-  // Clickjacking Protection: For direct visits, crawlers, and security scanners, send X-Frame-Options: DENY
-  const isGoogleIframe = Boolean(
-    req.headers['sec-fetch-dest'] === 'iframe' &&
-    (typeof req.headers.referer === 'string' && req.headers.referer.includes('google.com'))
-  );
-
-  if (!isGoogleIframe) {
-    res.setHeader('X-Frame-Options', 'DENY');
-  }
+  // Do NOT send X-Frame-Options: DENY because it blocks iframe previews in Google AdSense, AI Studio, and embedded environments
+  res.removeHeader('X-Frame-Options');
 
   res.setHeader(
     'Content-Security-Policy',
@@ -37,9 +30,9 @@ app.use((req, res, next) => {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net",
-      "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google",
-      "frame-ancestors 'self' https://*.google.com https://*.googleusercontent.com https://*.run.app https://aistudio.google.com",
-      "connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com",
+      "frame-src 'self' data: blob: https: http: https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google https://*.googlesyndication.com https://*.doubleclick.net",
+      "frame-ancestors 'self' https: http: *",
+      "connect-src 'self' data: blob: https: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com",
       "media-src 'self' data: blob:",
       "object-src 'none'",
       "base-uri 'self'",
@@ -47,9 +40,7 @@ app.use((req, res, next) => {
   );
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
   next();
 });
 
@@ -80,8 +71,13 @@ app.get('/api/health', (req, res) => {
 });
 
 // AdSense Authorized Digital Sellers (ads.txt) verification route
-app.get('/ads.txt', (req, res) => {
-  res.type('text/plain');
+app.get(['/ads.txt', '/Ads.txt', '/ADS.TXT'], (req, res) => {
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  const adsTxtPath = path.join(process.cwd(), 'public', 'ads.txt');
+  if (fs.existsSync(adsTxtPath)) {
+    return res.sendFile(adsTxtPath);
+  }
   res.send('google.com, pub-9341732423335241, DIRECT, f08c47fec0942fa0\n');
 });
 

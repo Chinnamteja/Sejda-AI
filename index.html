@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Content Security Policy (CSP) for Google AdSense, GTag, Fonts, and Secure Document Processing -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google; frame-ancestors 'self' https://*.google.com https://*.googleusercontent.com https://*.run.app; connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com; media-src 'self' data: blob:; object-src 'none'; base-uri 'self';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; frame-src 'self' data: blob: https: http:; connect-src 'self' data: blob: https: https://pagead2.googlesyndication.com https://adservice.google.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://www.google-analytics.com https://generativelanguage.googleapis.com; media-src 'self' data: blob:; object-src 'none'; base-uri 'self';" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
@@ -27,11 +27,10 @@
 
     <!-- Google AdSense Global Configuration -->
     <script>
-      window.google_ad_client = "ca-pub-9341732423335241";
+      window.adsbygoogle = window.adsbygoogle || [];
       try {
         window.google_page_url = window.location.href;
       } catch (e) {}
-      window.adsbygoogle = window.adsbygoogle || [];
     </script>
 
     <!-- Google AdSense Official Script -->
@@ -285,7 +284,7 @@
     }
     </script>
 
-    <!-- Responsive, non-destructive AdSense styles (avoids No slot size for availableWidth=0 in iframes) -->
+    <!-- Responsive, non-destructive AdSense styles and universal iframe preview compatibility -->
     <style>
       .adsbygoogle[data-ad-status="unfilled"] {
         display: none !important;
@@ -294,6 +293,15 @@
         max-width: 100%;
         margin-left: auto;
         margin-right: auto;
+      }
+      /* Ensure full iframe previewing in Google AdSense Auto Ads preview, AI Studio, and external iframes */
+      html, body {
+        width: 100%;
+        min-height: 100%;
+      }
+      #root {
+        min-height: 100vh;
+        width: 100%;
       }
     </style>
 

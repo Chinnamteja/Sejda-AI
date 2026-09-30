@@ -26,14 +26,17 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
   const adPushedRef = useRef<boolean>(false);
 
   useEffect(() => {
-    // Detect if running inside Google AdSense previewer / console to prevent iframe collision
+    // Detect if running inside Google AdSense previewer / console or iframe to prevent iframe collision
     try {
       const isPreview = Boolean(
         window.location.search.includes('google_preview') ||
         window.location.search.includes('google_ad_preview') ||
         window.location.search.includes('google_adsense') ||
         window.location.hash.includes('google_preview') ||
-        (document.referrer && document.referrer.includes('google.com/adsense'))
+        (typeof document !== 'undefined' && document.referrer && (
+          document.referrer.includes('google.com/adsense') ||
+          document.referrer.includes('adsense.google.com')
+        ))
       );
       setIsAdSensePreview(isPreview);
     } catch (e) {}
