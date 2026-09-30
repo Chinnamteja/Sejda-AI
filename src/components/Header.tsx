@@ -28,7 +28,6 @@ import {
 } from 'lucide-react';
 import { ToolId } from '../types';
 import { TOOLS_DIRECTORY } from '../data/toolsDirectory';
-import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   currentTool: ToolId;
@@ -524,8 +523,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               Pricing
             </button>
-
-            <PWAInstallButton onOpenDesktopModal={onShowDesktopInfo} />
 
             {/* Mobile Menu Button (Accessible on Mobile & Tablet) */}
             <button
