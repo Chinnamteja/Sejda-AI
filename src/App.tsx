@@ -530,7 +530,7 @@ export default function App() {
       />
 
       {/* Main Viewport Content */}
-      <main className="flex-1">{renderActiveView()}</main>
+      <main className="flex-1 flex flex-col">{renderActiveView()}</main>
 
       {/* Global Footer (shown on landing page, legal/privacy, sitemap, about, contact, guides) */}
       {(!activeTool ||

@@ -122,7 +122,7 @@ export const WatermarkTool: React.FC<WatermarkToolProps> = ({
   const previewPage = selectedDoc?.pages[0];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="w-full max-w-4xl mx-auto px-4 py-8 flex-1 flex flex-col justify-center">
       {/* Hidden File Input */}
       <input
         ref={fileInputRef}
@@ -171,14 +171,14 @@ export const WatermarkTool: React.FC<WatermarkToolProps> = ({
               handleFile(e.dataTransfer.files[0]);
             }
           }}
-          className={`mt-8 bg-white p-8 sm:p-12 rounded-2xl border-2 border-dashed transition-all text-center ${
+          className={`mt-8 bg-white p-8 sm:p-14 rounded-2xl border-2 border-dashed transition-all text-center flex flex-col items-center justify-center min-h-[380px] sm:min-h-[440px] ${
             isDragging
               ? 'border-[#18a474] bg-emerald-50/50 ring-4 ring-emerald-500/10'
               : 'border-slate-300 hover:border-slate-400 bg-white shadow-xs'
           }`}
         >
-          <div className="max-w-md mx-auto space-y-5">
-            <div className="mx-auto w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-[#18a474]">
+          <div className="w-full max-w-md mx-auto space-y-5 flex flex-col items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-[#18a474] shrink-0">
               <UploadCloud className="w-8 h-8" />
             </div>
 
